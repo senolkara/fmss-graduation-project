@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="a9a3402d-efda-45a6-ac06-f9766eefa076" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../advertisement-service/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../advertisement-service/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../advertisement-service/mvnw" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../advertisement-service/mvnw.cmd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../advertisement-service/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../advertisement-service/src/main/java/com/senolkarakurt/advertisementservice/AdvertisementServiceApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../advertisement-service/src/main/resources/application.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../advertisement-service/src/test/java/com/senolkarakurt/advertisementservice/AdvertisementServiceApplicationTests.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/senolkarakurt/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/senolkarakurt/constants/CommonConstants.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/senolkarakurt/dto/LoggedUserAddressDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/senolkarakurt/dto/LoggedUserDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/senolkarakurt/dto/request/AddressRequestDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/senolkarakurt/dto/request/AuthorRequestDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/senolkarakurt/dto/request/BaseSearchRequestDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/senolkarakurt/dto/request/CategoryRequestDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/senolkarakurt/dto/request/CustomerNotificationRequestDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/senolkarakurt/dto/request/CustomerRequestDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/senolkarakurt/dto/request/InvoiceNotificationRequestDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/senolkarakurt/dto/request/InvoiceRequestDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/senolkarakurt/dto/request/OrderRequestDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/senolkarakurt/dto/request/ProductRequestDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/senolkarakurt/dto/request/PublisherRequestDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/senolkarakurt/dto/request/UserRequestDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/senolkarakurt/dto/response/AddressResponseDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/senolkarakurt/dto/response/AuthorResponseDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/senolkarakurt/dto/response/CategoryResponseDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/senolkarakurt/dto/response/CustomerNotificationResponseDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/senolkarakurt/dto/response/CustomerResponseDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/senolkarakurt/dto/response/ExceptionResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/senolkarakurt/dto/response/GenericResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/senolkarakurt/dto/response/InvoiceNotificationResponseDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/senolkarakurt/dto/response/InvoiceResponseDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/senolkarakurt/dto/response/OrderResponseDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/senolkarakurt/dto/response/ProductResponseDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/senolkarakurt/dto/response/PublisherResponseDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/senolkarakurt/dto/response/UserResponseDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/senolkarakurt/enums/AccountType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/senolkarakurt/enums/NotificationType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/senolkarakurt/enums/OrderStatus.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/senolkarakurt/enums/ProductType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/senolkarakurt/enums/StatusType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/senolkarakurt/exception/CommonException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/senolkarakurt/exception/ExceptionErrorCreatedMessage.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/senolkarakurt/exception/ExceptionSuccessCreatedMessage.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/senolkarakurt/exception/GlobalExceptionHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/senolkarakurt/util/GenerateRandomUnique.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/messages.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/senolkarakurt/Main.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/senolkarakurt/constants/CommonConstants.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/senolkarakurt/dto/LoggedUserAddressDto.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/senolkarakurt/dto/LoggedUserDto.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/senolkarakurt/dto/request/AddressRequestDto.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/senolkarakurt/dto/request/AuthorRequestDto.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/senolkarakurt/dto/request/BaseSearchRequestDto.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/senolkarakurt/dto/request/CategoryRequestDto.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/senolkarakurt/dto/request/CustomerNotificationRequestDto.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/senolkarakurt/dto/request/CustomerRequestDto.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/senolkarakurt/dto/request/InvoiceNotificationRequestDto.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/senolkarakurt/dto/request/InvoiceRequestDto.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/senolkarakurt/dto/request/OrderRequestDto.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/senolkarakurt/dto/request/ProductRequestDto.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/senolkarakurt/dto/request/PublisherRequestDto.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/senolkarakurt/dto/request/UserRequestDto.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/senolkarakurt/dto/response/AddressResponseDto.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/senolkarakurt/dto/response/AuthorResponseDto.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/senolkarakurt/dto/response/CategoryResponseDto.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/senolkarakurt/dto/response/CustomerNotificationResponseDto.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/senolkarakurt/dto/response/CustomerResponseDto.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/senolkarakurt/dto/response/ExceptionResponse.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/senolkarakurt/dto/response/GenericResponse.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/senolkarakurt/dto/response/InvoiceNotificationResponseDto.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/senolkarakurt/dto/response/InvoiceResponseDto.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/senolkarakurt/dto/response/OrderResponseDto.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/senolkarakurt/dto/response/ProductResponseDto.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/senolkarakurt/dto/response/PublisherResponseDto.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/senolkarakurt/dto/response/UserResponseDto.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/senolkarakurt/enums/AccountType.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/senolkarakurt/enums/NotificationType.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/senolkarakurt/enums/OrderStatus.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/senolkarakurt/enums/ProductType.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/senolkarakurt/enums/StatusType.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/senolkarakurt/exception/CommonException.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/senolkarakurt/exception/ExceptionErrorCreatedMessage.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/senolkarakurt/exception/ExceptionSuccessCreatedMessage.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/senolkarakurt/exception/GlobalExceptionHandler.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/senolkarakurt/util/GenerateRandomUnique.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/messages.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../customer-service/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../customer-service/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../customer-service/mvnw" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../customer-service/mvnw.cmd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../customer-service/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../customer-service/src/main/java/com/senolkarakurt/customerservice/CustomerServiceApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../customer-service/src/main/java/com/senolkarakurt/customerservice/client/UserClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../customer-service/src/main/java/com/senolkarakurt/customerservice/client/service/UserClientService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../customer-service/src/main/java/com/senolkarakurt/customerservice/config/MyConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../customer-service/src/main/java/com/senolkarakurt/customerservice/config/RabbitCustomerConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../customer-service/src/main/java/com/senolkarakurt/customerservice/controller/CustomerController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../customer-service/src/main/java/com/senolkarakurt/customerservice/converter/AddressConverter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../customer-service/src/main/java/com/senolkarakurt/customerservice/converter/CustomerConverter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../customer-service/src/main/java/com/senolkarakurt/customerservice/converter/UserConverter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../customer-service/src/main/java/com/senolkarakurt/customerservice/dto/LoggedUserAddressDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../customer-service/src/main/java/com/senolkarakurt/customerservice/dto/LoggedUserDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../customer-service/src/main/java/com/senolkarakurt/customerservice/dto/request/CustomerSaveRequestDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../customer-service/src/main/java/com/senolkarakurt/customerservice/dto/request/CustomerUpdateRequestDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../customer-service/src/main/java/com/senolkarakurt/customerservice/exception/ExceptionMessagesResource.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../customer-service/src/main/java/com/senolkarakurt/customerservice/model/Address.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../customer-service/src/main/java/com/senolkarakurt/customerservice/model/Customer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../customer-service/src/main/java/com/senolkarakurt/customerservice/model/User.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../customer-service/src/main/java/com/senolkarakurt/customerservice/producer/NotificationCustomerProducer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../customer-service/src/main/java/com/senolkarakurt/customerservice/producer/dto/NotificationCustomerDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../customer-service/src/main/java/com/senolkarakurt/customerservice/repository/CustomerRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../customer-service/src/main/java/com/senolkarakurt/customerservice/service/CustomerService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../customer-service/src/main/java/com/senolkarakurt/customerservice/service/impl/CustomerServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../customer-service/src/main/resources/application.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../customer-service/src/test/java/com/senolkarakurt/customerservice/CustomerServiceApplicationTests.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../gateway/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../gateway/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../gateway/mvnw" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../gateway/mvnw.cmd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../gateway/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../gateway/src/main/java/com/senolkarakurt/gateway/GatewayApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../gateway/src/main/resources/application.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../gateway/src/test/java/com/senolkarakurt/gateway/GatewayApplicationTests.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../notification-service/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../notification-service/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../notification-service/mvnw" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../notification-service/mvnw.cmd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../notification-service/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../notification-service/src/main/java/com/senolkarakurt/notificationservice/NotificationServiceApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../notification-service/src/main/java/com/senolkarakurt/notificationservice/component/NotificationComponent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../notification-service/src/main/java/com/senolkarakurt/notificationservice/config/RabbitConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../notification-service/src/main/java/com/senolkarakurt/notificationservice/config/StrategyConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../notification-service/src/main/java/com/senolkarakurt/notificationservice/consumer/NotificationCustomerConsumer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../notification-service/src/main/java/com/senolkarakurt/notificationservice/consumer/NotificationInvoiceConsumer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../notification-service/src/main/java/com/senolkarakurt/notificationservice/consumer/dto/NotificationCustomerDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../notification-service/src/main/java/com/senolkarakurt/notificationservice/consumer/dto/NotificationInvoiceDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../notification-service/src/main/java/com/senolkarakurt/notificationservice/controller/NotificationController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../notification-service/src/main/java/com/senolkarakurt/notificationservice/converter/CustomerNotificationConverter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../notification-service/src/main/java/com/senolkarakurt/notificationservice/converter/InvoiceNotificationConverter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../notification-service/src/main/java/com/senolkarakurt/notificationservice/exception/ExceptionMessagesResource.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../notification-service/src/main/java/com/senolkarakurt/notificationservice/model/CustomerNotification.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../notification-service/src/main/java/com/senolkarakurt/notificationservice/model/InvoiceNotification.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../notification-service/src/main/java/com/senolkarakurt/notificationservice/repository/CustomerNotificationRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../notification-service/src/main/java/com/senolkarakurt/notificationservice/repository/InvoiceNotificationRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../notification-service/src/main/java/com/senolkarakurt/notificationservice/service/CustomerNotificationService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../notification-service/src/main/java/com/senolkarakurt/notificationservice/service/InvoiceNotificationService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../notification-service/src/main/java/com/senolkarakurt/notificationservice/service/impl/CustomerNotificationServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../notification-service/src/main/java/com/senolkarakurt/notificationservice/service/impl/InvoiceNotificationServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../notification-service/src/main/java/com/senolkarakurt/notificationservice/strategy/NotificationStrategy.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../notification-service/src/main/java/com/senolkarakurt/notificationservice/strategy/impl/EmailNotificationStrategy.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../notification-service/src/main/java/com/senolkarakurt/notificationservice/strategy/impl/SiteNotificationStrategy.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../notification-service/src/main/java/com/senolkarakurt/notificationservice/strategy/impl/SmsNotificationStrategy.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../notification-service/src/main/resources/application.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../notification-service/src/test/java/com/senolkarakurt/notificationservice/NotificationServiceApplicationTests.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../notification-service/src/test/java/com/senolkarakurt/notificationservice/service/CustomerNotificationServiceTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../notification-service/src/test/java/com/senolkarakurt/notificationservice/service/InvoiceNotificationServiceTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../order-service/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../order-service/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../order-service/mvnw" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../order-service/mvnw.cmd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../order-service/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../order-service/src/main/java/com/senolkarakurt/orderservice/OrderServiceApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../order-service/src/main/resources/application.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../order-service/src/test/java/com/senolkarakurt/orderservice/OrderServiceApplicationTests.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../purchase-service/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../purchase-service/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../purchase-service/mvnw" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../purchase-service/mvnw.cmd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../purchase-service/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../purchase-service/src/main/java/com/senolkarakurt/purchaseservice/PurchaseServiceApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../purchase-service/src/main/resources/application.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../purchase-service/src/test/java/com/senolkarakurt/purchaseservice/PurchaseServiceApplicationTests.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../service-registry/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../service-registry/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../service-registry/mvnw" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../service-registry/mvnw.cmd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../service-registry/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../service-registry/src/main/java/com/senolkarakurt/serviceregistry/ServiceRegistryApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../service-registry/src/main/resources/application.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../service-registry/src/test/java/com/senolkarakurt/serviceregistry/ServiceRegistryApplicationTests.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../user-service/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../user-service/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../user-service/mvnw" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../user-service/mvnw.cmd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../user-service/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../user-service/src/main/java/com/senolkarakurt/userservice/UserServiceApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../user-service/src/main/java/com/senolkarakurt/userservice/config/MyConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../user-service/src/main/java/com/senolkarakurt/userservice/controller/UserController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../user-service/src/main/java/com/senolkarakurt/userservice/converter/AddressConverter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../user-service/src/main/java/com/senolkarakurt/userservice/converter/UserConverter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../user-service/src/main/java/com/senolkarakurt/userservice/dto/request/LoginRequestDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../user-service/src/main/java/com/senolkarakurt/userservice/exception/ExceptionMessagesResource.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../user-service/src/main/java/com/senolkarakurt/userservice/model/Address.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../user-service/src/main/java/com/senolkarakurt/userservice/model/User.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../user-service/src/main/java/com/senolkarakurt/userservice/repository/AddressRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../user-service/src/main/java/com/senolkarakurt/userservice/repository/UserRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../user-service/src/main/java/com/senolkarakurt/userservice/service/UserService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../user-service/src/main/java/com/senolkarakurt/userservice/service/impl/UserServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../user-service/src/main/resources/application.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../user-service/src/test/java/com/senolkarakurt/userservice/UserServiceApplicationTests.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;senolkara&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/FMSS-Full-Stack-Bootcamp/odev-3-senolkara.git&quot;,
+    &quot;accountId&quot;: &quot;b4c62efc-a293-419f-b925-e2dc6c40734f&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
+  <component name="ProjectId" id="2hWDEkFgCeSIqrRR01la8VhwaTJ" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Maven.common-libs [clean,install].executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "master",
+    "jdk.selected.JAVA_MODULE": "openjdk-21",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "H:/Java_Projects/fmss-graduation-project/backend/customer-service",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="mvn clean install" />
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="CustomerServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="customer-service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.senolkarakurt.customerservice.CustomerServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-22-openjdk-22-4caba194b151-f504ca98" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="a9a3402d-efda-45a6-ac06-f9766eefa076" name="Changes" comment="" />
+      <created>1717700829664</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1717700829664</updated>
+      <workItem from="1717700830735" duration="794000" />
+      <workItem from="1717701633490" duration="36000" />
+      <workItem from="1717702012347" duration="464000" />
+      <workItem from="1720130228454" duration="16000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
