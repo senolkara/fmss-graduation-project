@@ -60,7 +60,11 @@ public class InvoiceNotificationConverter {
         orderResponseDto.setCustomerResponseDto(customerResponseDto);
         InvoiceResponseDto invoiceResponseDto = new InvoiceResponseDto();
         invoiceResponseDto.setTotalPrice(invoiceNotification.getTotalPrice());
-        invoiceResponseDto.setOrderResponseDto(orderResponseDto);
+        PurchaseResponseDto purchaseResponseDto = PurchaseResponseDto.builder()
+                .orderResponseDto(orderResponseDto)
+                .build();
+        purchaseResponseDto.setOrderResponseDto(orderResponseDto);
+        invoiceResponseDto.setPurchaseResponseDto(purchaseResponseDto);
         return NotificationInvoiceDto.builder()
                 .notificationType(invoiceNotification.getNotificationType())
                 .invoiceResponseDto(invoiceResponseDto)

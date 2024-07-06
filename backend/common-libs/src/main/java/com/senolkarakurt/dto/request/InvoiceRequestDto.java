@@ -20,5 +20,5 @@ public class InvoiceRequestDto {
     @NotEmpty(message = "tutar alanını doldurunuz!")
     @Size(min = 2, max = 255)
     private BigDecimal totalPrice;
-    private OrderRequestDto orderRequestDto;
+    private PurchaseRequestDto purchaseRequestDto;
 }

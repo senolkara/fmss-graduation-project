@@ -10,9 +10,6 @@ import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 
 @Getter
 @Setter
@@ -27,12 +24,8 @@ public class OrderResponseDto implements Serializable {
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime createDateTime;
 
-    private List<ProductResponseDto> productResponseDtoList;
     private String orderCode;
     private OrderStatus orderStatus;
+    private PackageResponseDto packageResponseDto;
     private CustomerResponseDto customerResponseDto;
-
-    public List<ProductResponseDto> getProductResponseDtoList() {
-        return Objects.requireNonNullElseGet(productResponseDtoList, ArrayList::new);
-    }
 }

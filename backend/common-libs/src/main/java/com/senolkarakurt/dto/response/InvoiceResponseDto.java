@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 public class InvoiceResponseDto implements Serializable {
     private Long id;
     private BigDecimal totalPrice;
-    private OrderResponseDto orderResponseDto;
+    private PurchaseResponseDto purchaseResponseDto;
 
     @JsonProperty("createDateTime")
     @JsonSerialize(using = LocalDateTimeSerializer.class)

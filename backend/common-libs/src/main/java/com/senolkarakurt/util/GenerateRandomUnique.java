@@ -38,10 +38,9 @@ public class GenerateRandomUnique {
         return "INV-" + (min + (int)(Math.random() * ((max - min) + 1)));
     }
 
-    public static Long createId(Set<Long> idSet){
-         if (!idSet.isEmpty()){
-             return Collections.max(idSet) + 1;
-         }
-        return 1L;
+    public static String createRandomAdvertisementNo(){
+        int max=9999999,min=1000000;
+        return String.valueOf((min + (int)(Math.random() * ((max - min) + 1))));
     }
+
 }

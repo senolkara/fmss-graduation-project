@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="common-libs" />
+        <module name="customer-service" />
+        <module name="advertisement-service" />
+        <module name="purchase-service" />
+        <module name="user-service" />
+        <module name="order-service" />
+        <module name="service-registry" />
+        <module name="gateway" />
+        <module name="notification-service" />
+        <module name="package-service" />
+      </profile>
+    </annotationProcessing>
+  </component>
+</project>
