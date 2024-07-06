@@ -28,10 +28,10 @@ public class InvoiceNotificationConverter {
         return InvoiceNotificationRequestDto.builder()
                 .notificationType(notificationInvoiceDto.getNotificationType())
                 .totalPrice(notificationInvoiceDto.getInvoiceResponseDto().getTotalPrice())
-                .orderCode(notificationInvoiceDto.getInvoiceResponseDto().getOrderResponseDto().getOrderCode())
-                .name(notificationInvoiceDto.getInvoiceResponseDto().getOrderResponseDto().getCustomerResponseDto().getUserResponseDto().getName())
-                .surname(notificationInvoiceDto.getInvoiceResponseDto().getOrderResponseDto().getCustomerResponseDto().getUserResponseDto().getSurname())
-                .email(notificationInvoiceDto.getInvoiceResponseDto().getOrderResponseDto().getCustomerResponseDto().getUserResponseDto().getEmail())
+                .orderCode(notificationInvoiceDto.getInvoiceResponseDto().getPurchaseResponseDto().getOrderResponseDto().getOrderCode())
+                .name(notificationInvoiceDto.getInvoiceResponseDto().getPurchaseResponseDto().getOrderResponseDto().getCustomerResponseDto().getUserResponseDto().getName())
+                .surname(notificationInvoiceDto.getInvoiceResponseDto().getPurchaseResponseDto().getOrderResponseDto().getCustomerResponseDto().getUserResponseDto().getSurname())
+                .email(notificationInvoiceDto.getInvoiceResponseDto().getPurchaseResponseDto().getOrderResponseDto().getCustomerResponseDto().getUserResponseDto().getEmail())
                 .build();
     }
 
