@@ -14,6 +14,7 @@ public class FakeDataComponent {
 
     @PostConstruct
     public void init() {
+        buildingRepository.deleteAll();
         buildingRepository.saveAll(CreateFakeData.getHouseList());
         buildingRepository.saveAll(CreateFakeData.getVillaList());
         buildingRepository.saveAll(CreateFakeData.getSummerHouseList());

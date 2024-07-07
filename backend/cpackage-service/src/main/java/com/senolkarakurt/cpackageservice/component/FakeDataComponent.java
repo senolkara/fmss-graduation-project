@@ -14,6 +14,7 @@ public class FakeDataComponent {
 
     @PostConstruct
     public void init() {
+        packageRepository.deleteAll();
         packageRepository.saveAll(CreateFakeData.getCPackageList());
     }
 
