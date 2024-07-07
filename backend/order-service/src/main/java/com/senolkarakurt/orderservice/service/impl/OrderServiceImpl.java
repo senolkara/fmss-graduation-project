@@ -10,7 +10,7 @@ import com.senolkarakurt.orderservice.dto.request.OrderSaveRequestDto;
 import com.senolkarakurt.orderservice.dto.request.OrderSearchRequestDto;
 import com.senolkarakurt.orderservice.exception.ExceptionMessagesResource;
 import com.senolkarakurt.orderservice.model.*;
-import com.senolkarakurt.orderservice.model.Package;
+import com.senolkarakurt.orderservice.model.CPackage;
 import com.senolkarakurt.orderservice.repository.OrderRepository;
 import com.senolkarakurt.orderservice.repository.specification.OrderSpecification;
 import com.senolkarakurt.orderservice.service.OrderService;
@@ -48,10 +48,10 @@ public class OrderServiceImpl implements OrderService {
         order.setOrderStatus(OrderStatus.IN_PROGRESS);
         orderRepository.save(order);
 
-        Package packageById = packageClientService.getPackageById(order.getPackageId());
+        CPackage CPackageById = packageClientService.getPackageById(order.getPackageId());
         Purchase purchase = Purchase.builder()
                 .createDateTime(LocalDateTime.now())
-                .totalPrice(packageById.getPrice())
+                .totalPrice(CPackageById.getPrice())
                 .orderId(order.getId())
                 .build();
         purchaseClientService.save(purchase);
@@ -114,11 +114,11 @@ public class OrderServiceImpl implements OrderService {
 
     private OrderSaveRequestDto getOrderSaveRequestDto(OrderRequestDto orderRequestDto){
         Customer customer = customerClientService.getCustomerById(orderRequestDto.getCustomerRequestDto().getId());
-        Package aPackage = packageClientService.getPackageById(orderRequestDto.getPackageRequestDto().getId());
+        CPackage aCPackage = packageClientService.getPackageById(orderRequestDto.getPackageRequestDto().getId());
         String orderCode = createOrderCode(GenerateRandomUnique.createRandomOrderCode());
         return OrderSaveRequestDto.builder()
                 .orderCode(orderCode)
-                .aPackage(aPackage)
+                .aCPackage(aCPackage)
                 .customer(customer)
                 .build();
     }
@@ -146,8 +146,8 @@ public class OrderServiceImpl implements OrderService {
         userResponseDto.setAddressResponseDtoSet(addressResponseDtoSet);
         customerResponseDto.setUserResponseDto(userResponseDto);
         orderResponseDto.setCustomerResponseDto(customerResponseDto);
-        Package packageById = packageClientService.getPackageById(order.getPackageId());
-        PackageResponseDto packageResponseDto = PackageConverter.toPackageResponseDtoByPackage(packageById);
+        CPackage CPackageById = packageClientService.getPackageById(order.getPackageId());
+        PackageResponseDto packageResponseDto = PackageConverter.toPackageResponseDtoByPackage(CPackageById);
         orderResponseDto.setPackageResponseDto(packageResponseDto);
         return orderResponseDto;
     }

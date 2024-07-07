@@ -1,10 +1,8 @@
 package com.senolkarakurt.orderservice.dto.request;
 
 import com.senolkarakurt.orderservice.model.Customer;
-import com.senolkarakurt.orderservice.model.Package;
+import com.senolkarakurt.orderservice.model.CPackage;
 import lombok.*;
-
-import java.util.List;
 
 @Getter
 @Setter
@@ -14,6 +12,6 @@ import java.util.List;
 @ToString
 public class OrderSaveRequestDto {
     private String orderCode;
-    private Package aPackage;
+    private CPackage aCPackage;
     private Customer customer;
 }

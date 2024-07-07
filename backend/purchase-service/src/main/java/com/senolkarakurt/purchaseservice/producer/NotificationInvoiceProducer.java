@@ -12,12 +12,12 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class NotificationInvoiceProducer {
 
-    private final AmqpTemplate rabbitTemplate;
+    private final AmqpTemplate rabbitInvoiceTemplate;
     private final RabbitInvoiceConfig rabbitInvoiceConfig;
 
     public void sendNotificationInvoice(NotificationInvoiceDto notificationInvoiceDto) {
         log.info(String.format("message sent -> %s", notificationInvoiceDto.toString()));
-        rabbitTemplate.convertAndSend(rabbitInvoiceConfig.getInvoiceExchange(), "", notificationInvoiceDto);
+        rabbitInvoiceTemplate.convertAndSend(rabbitInvoiceConfig.getInvoiceExchange(), "", notificationInvoiceDto);
         log.info("notification sent. invoice exchange:{}", rabbitInvoiceConfig.getInvoiceExchange());
     }
 

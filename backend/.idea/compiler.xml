@@ -8,6 +8,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="common-libs" />
+        <module name="cpackage-service" />
         <module name="customer-service" />
         <module name="advertisement-service" />
         <module name="purchase-service" />
@@ -16,8 +17,10 @@
         <module name="service-registry" />
         <module name="gateway" />
         <module name="notification-service" />
-        <module name="package-service" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="package-service" target="22" />
+    </bytecodeTargetLevel>
   </component>
 </project>

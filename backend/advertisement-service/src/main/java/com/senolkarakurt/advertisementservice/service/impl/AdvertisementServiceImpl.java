@@ -6,7 +6,7 @@ import com.senolkarakurt.advertisementservice.client.service.UserClientService;
 import com.senolkarakurt.advertisementservice.converter.*;
 import com.senolkarakurt.advertisementservice.exception.ExceptionMessagesResource;
 import com.senolkarakurt.advertisementservice.model.*;
-import com.senolkarakurt.advertisementservice.model.Package;
+import com.senolkarakurt.advertisementservice.model.CPackage;
 import com.senolkarakurt.advertisementservice.producer.NotificationAdvertisementProducer;
 import com.senolkarakurt.advertisementservice.producer.dto.NotificationAdvertisementDto;
 import com.senolkarakurt.advertisementservice.repository.AdvertisementRepository;
@@ -16,7 +16,6 @@ import com.senolkarakurt.dto.request.AdvertisementRequestDto;
 import com.senolkarakurt.dto.response.*;
 import com.senolkarakurt.enums.AdvertisementStatus;
 import com.senolkarakurt.enums.NotificationType;
-import com.senolkarakurt.enums.RecordStatus;
 import com.senolkarakurt.exception.CommonException;
 import com.senolkarakurt.util.GenerateRandomUnique;
 import lombok.RequiredArgsConstructor;
@@ -123,8 +122,8 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     private AdvertisementResponseDto getAdvertisementResponseDto(Advertisement advertisement){
         AdvertisementResponseDto advertisementResponseDto = AdvertisementConverter.toAdvertisementResponseDtoByAdvertisement(advertisement);
         CustomerPackage customerPackage = packageClientService.getCustomerPackageById(advertisement.getCustomerPackageId());
-        Package packageById = packageClientService.getPackageById(customerPackage.getPackageId());
-        PackageResponseDto packageResponseDto = PackageConverter.toPackageResponseDtoByPackage(packageById);
+        CPackage CPackageById = packageClientService.getPackageById(customerPackage.getPackageId());
+        PackageResponseDto packageResponseDto = PackageConverter.toPackageResponseDtoByPackage(CPackageById);
         CustomerPackageResponseDto customerPackageResponseDto = PackageConverter.toCustomerPackageResponseDtoByCustomerPackage(customerPackage);
         customerPackageResponseDto.setPackageResponseDto(packageResponseDto);
         Customer customer = customerClientService.getCustomerById(customerPackage.getCustomerId());

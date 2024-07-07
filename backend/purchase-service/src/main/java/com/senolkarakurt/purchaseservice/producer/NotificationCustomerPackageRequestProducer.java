@@ -12,12 +12,12 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class NotificationCustomerPackageRequestProducer {
 
-    private final AmqpTemplate rabbitTemplate;
+    private final AmqpTemplate rabbitCustomerPackageTemplate;
     private final RabbitCustomerPackageConfig rabbitCustomerPackageConfig;
 
     public void sendNotificationCustomerPackageRequest(NotificationCustomerPackageRequestDto notificationCustomerPackageRequestDto) {
         log.info(String.format("message sent -> %s", notificationCustomerPackageRequestDto.toString()));
-        rabbitTemplate.convertAndSend(rabbitCustomerPackageConfig.getCustomerPackageExchange(), "", notificationCustomerPackageRequestDto);
+        rabbitCustomerPackageTemplate.convertAndSend(rabbitCustomerPackageConfig.getCustomerPackageExchange(), "", notificationCustomerPackageRequestDto);
         log.info("notification sent. customer package exchange:{}", rabbitCustomerPackageConfig.getCustomerPackageExchange());
     }
 

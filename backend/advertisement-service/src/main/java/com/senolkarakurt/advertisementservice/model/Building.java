@@ -34,7 +34,7 @@ public abstract class Building implements Serializable {
     private Long id;
 
     @Enumerated(EnumType.ORDINAL)
-    @Column(name = "commercial_type", nullable = false)
+    @Column(name = "commercial_status", nullable = false)
     private CommercialStatus commercialStatus;
 
     @Enumerated(EnumType.ORDINAL)

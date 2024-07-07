@@ -1,6 +1,6 @@
 package com.senolkarakurt.orderservice.client;
 
-import com.senolkarakurt.orderservice.model.Package;
+import com.senolkarakurt.orderservice.model.CPackage;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 public interface PackageClient {
 
     @GetMapping("/id/{id}")
-    Package getPackageById(@PathVariable("id") Long id);
+    CPackage getPackageById(@PathVariable("id") Long id);
 
 }

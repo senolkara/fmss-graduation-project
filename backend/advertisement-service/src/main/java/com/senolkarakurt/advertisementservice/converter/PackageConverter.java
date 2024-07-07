@@ -1,6 +1,6 @@
 package com.senolkarakurt.advertisementservice.converter;
 
-import com.senolkarakurt.advertisementservice.model.Package;
+import com.senolkarakurt.advertisementservice.model.CPackage;
 import com.senolkarakurt.dto.response.CustomerPackageResponseDto;
 import com.senolkarakurt.dto.response.PackageResponseDto;
 import com.senolkarakurt.advertisementservice.model.CustomerPackage;
@@ -20,12 +20,12 @@ public class PackageConverter {
         return customerPackageResponseDto;
     }
 
-    public static PackageResponseDto toPackageResponseDtoByPackage(Package aPackage){
+    public static PackageResponseDto toPackageResponseDtoByPackage(CPackage aCPackage){
         PackageResponseDto packageResponseDto = new PackageResponseDto();
-        packageResponseDto.setId(aPackage.getId());
-        packageResponseDto.setPackageType(aPackage.getPackageType());
-        packageResponseDto.setPrice(aPackage.getPrice());
-        packageResponseDto.setDescription(aPackage.getDescription());
+        packageResponseDto.setId(aCPackage.getId());
+        packageResponseDto.setPackageType(aCPackage.getPackageType());
+        packageResponseDto.setPrice(aCPackage.getPrice());
+        packageResponseDto.setDescription(aCPackage.getDescription());
         return packageResponseDto;
     }
 }

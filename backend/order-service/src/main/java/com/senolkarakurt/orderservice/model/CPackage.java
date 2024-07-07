@@ -1,4 +1,4 @@
-package com.senolkarakurt.purchaseservice.model;
+package com.senolkarakurt.orderservice.model;
 
 import com.senolkarakurt.enums.PackageType;
 import jakarta.persistence.*;
@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 @Builder
 @Entity
 @Table(name = "packages")
-public class Package implements Serializable {
+public class CPackage implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

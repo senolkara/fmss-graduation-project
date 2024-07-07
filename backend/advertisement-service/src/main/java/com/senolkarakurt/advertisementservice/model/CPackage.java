@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 @Builder
 @Entity
 @Table(name = "packages")
-public class Package implements Serializable {
+public class CPackage implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

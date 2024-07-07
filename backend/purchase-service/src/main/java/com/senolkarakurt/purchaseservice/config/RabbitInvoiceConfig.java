@@ -6,6 +6,7 @@ import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -34,7 +35,8 @@ public class RabbitInvoiceConfig {
     }
 
     @Bean
-    public Binding invoiceBinding(Queue notificationInvoiceQueue, FanoutExchange fanoutInvoiceExchange) {
+    public Binding invoiceBinding(@Qualifier("notificationInvoiceQueue") Queue notificationInvoiceQueue,
+                                  @Qualifier("fanoutInvoiceExchange") FanoutExchange fanoutInvoiceExchange) {
         return BindingBuilder
                 .bind(notificationInvoiceQueue)
                 .to(fanoutInvoiceExchange)

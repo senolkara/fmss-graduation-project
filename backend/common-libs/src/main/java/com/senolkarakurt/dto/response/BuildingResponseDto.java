@@ -1,5 +1,6 @@
 package com.senolkarakurt.dto.response;
 
+import com.senolkarakurt.enums.BuildingType;
 import com.senolkarakurt.enums.CommercialStatus;
 import com.senolkarakurt.enums.RecordStatus;
 import lombok.AllArgsConstructor;
@@ -18,6 +19,7 @@ public class BuildingResponseDto implements Serializable {
     private Long id;
     private CommercialStatus commercialStatus;
     private RecordStatus recordStatus;
+    private BuildingType buildingType;
     private String name;
     private String description;
     private Integer squareMeters;

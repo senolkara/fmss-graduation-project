@@ -1,19 +1,19 @@
 package com.senolkarakurt.orderservice.converter;
 
 import com.senolkarakurt.dto.response.PackageResponseDto;
-import com.senolkarakurt.orderservice.model.Package;
+import com.senolkarakurt.orderservice.model.CPackage;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class PackageConverter {
 
-    public static PackageResponseDto toPackageResponseDtoByPackage(Package aPackage){
+    public static PackageResponseDto toPackageResponseDtoByPackage(CPackage aCPackage){
         PackageResponseDto packageResponseDto = new PackageResponseDto();
-        packageResponseDto.setId(aPackage.getId());
-        packageResponseDto.setPackageType(aPackage.getPackageType());
-        packageResponseDto.setPrice(aPackage.getPrice());
-        packageResponseDto.setDescription(aPackage.getDescription());
+        packageResponseDto.setId(aCPackage.getId());
+        packageResponseDto.setPackageType(aCPackage.getPackageType());
+        packageResponseDto.setPrice(aCPackage.getPrice());
+        packageResponseDto.setDescription(aCPackage.getDescription());
         return packageResponseDto;
     }
 }

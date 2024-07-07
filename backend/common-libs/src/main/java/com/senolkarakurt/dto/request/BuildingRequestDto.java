@@ -1,5 +1,6 @@
 package com.senolkarakurt.dto.request;
 
+import com.senolkarakurt.enums.BuildingType;
 import com.senolkarakurt.enums.CommercialStatus;
 import com.senolkarakurt.enums.RecordStatus;
 import lombok.AllArgsConstructor;
@@ -25,6 +26,9 @@ public class BuildingRequestDto {
 
     @NotNull(message = "kayıt durumunu seçiniz!")
     private RecordStatus recordStatus;
+
+    @NotNull(message = "bina tipini seçiniz!")
+    private BuildingType buildingType;
 
     @NotBlank(message = "ad alanını doldurunuz!")
     @Size(min = 2, max = 255)

@@ -3,6 +3,7 @@ package com.senolkarakurt.advertisementservice.service;
 import com.senolkarakurt.advertisementservice.model.Advertisement;
 import com.senolkarakurt.advertisementservice.model.Building;
 import com.senolkarakurt.dto.request.AdvertisementRequestDto;
+import com.senolkarakurt.dto.request.BuildingRequestDto;
 import com.senolkarakurt.dto.response.AdvertisementResponseDto;
 import com.senolkarakurt.enums.AdvertisementStatus;
 

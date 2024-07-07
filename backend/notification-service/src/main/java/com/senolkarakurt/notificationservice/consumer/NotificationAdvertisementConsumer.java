@@ -45,7 +45,7 @@ public class NotificationAdvertisementConsumer {
             log.error("%s : {}".formatted(exceptionMessagesResource.getNotSendNotification()));
         }
         saveAdvertisementNotificationMessage(notificationAdvertisementDto, statusType);
-        changeAdvertisementStatus(
+        advertisementClientService.changeAdvertisementStatus(
                 notificationAdvertisementDto.getAdvertisementResponseDto().getId(),
                 AdvertisementStatus.ACTIVE
         );
@@ -55,9 +55,5 @@ public class NotificationAdvertisementConsumer {
         AdvertisementNotificationRequestDto advertisementNotificationRequestDto = AdvertisementNotificationConverter.toAdvertisementNotificationRequestDtoByNotificationAdvertisementDto(notificationAdvertisementDto);
         advertisementNotificationRequestDto.setStatusType(statusType);
         advertisementNotificationService.save(advertisementNotificationRequestDto);
-    }
-
-    public void changeAdvertisementStatus(Long id, AdvertisementStatus advertisementStatus){
-        advertisementClientService.changeAdvertisementStatus(id, advertisementStatus);
     }
 }

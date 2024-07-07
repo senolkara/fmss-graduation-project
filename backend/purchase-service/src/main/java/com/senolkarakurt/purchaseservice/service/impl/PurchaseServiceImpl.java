@@ -14,7 +14,7 @@ import com.senolkarakurt.purchaseservice.converter.*;
 import com.senolkarakurt.purchaseservice.dto.request.PurchaseSaveRequestDto;
 import com.senolkarakurt.purchaseservice.exception.ExceptionMessagesResource;
 import com.senolkarakurt.purchaseservice.model.*;
-import com.senolkarakurt.purchaseservice.model.Package;
+import com.senolkarakurt.purchaseservice.model.CPackage;
 import com.senolkarakurt.purchaseservice.producer.NotificationCustomerPackageRequestProducer;
 import com.senolkarakurt.purchaseservice.producer.NotificationInvoiceProducer;
 import com.senolkarakurt.purchaseservice.producer.dto.NotificationCustomerPackageRequestDto;
@@ -105,9 +105,9 @@ public class PurchaseServiceImpl implements PurchaseService {
 
     private CustomerPackageRequestDto getCustomerPackageRequestDto(Purchase purchase){
         Order order = orderClientService.getOrderById(purchase.getOrderId());
-        Package packageById = packageClientService.getPackageById(order.getPackageId());
+        CPackage CPackageById = packageClientService.getPackageById(order.getPackageId());
         PackageRequestDto packageRequestDto = PackageRequestDto.builder()
-                .id(packageById.getId())
+                .id(CPackageById.getId())
                 .build();
         Customer customer = customerClientService.getCustomerById(order.getCustomerId());
         CustomerRequestDto customerRequestDto = CustomerRequestDto.builder()
@@ -146,8 +146,8 @@ public class PurchaseServiceImpl implements PurchaseService {
         userResponseDto.setAddressResponseDtoSet(addressResponseDtoSet);
         customerResponseDto.setUserResponseDto(userResponseDto);
         orderResponseDto.setCustomerResponseDto(customerResponseDto);
-        Package packageById = packageClientService.getPackageById(order.getPackageId());
-        PackageResponseDto packageResponseDto = PackageConverter.toPackageResponseDtoByPackage(packageById);
+        CPackage CPackageById = packageClientService.getPackageById(order.getPackageId());
+        PackageResponseDto packageResponseDto = PackageConverter.toPackageResponseDtoByPackage(CPackageById);
         orderResponseDto.setPackageResponseDto(packageResponseDto);
         return orderResponseDto;
     }

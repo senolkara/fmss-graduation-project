@@ -19,7 +19,7 @@ public class OrderConverter {
         order.setCreateDateTime(LocalDateTime.now());
         order.setCustomerId(orderSaveRequestDto.getCustomer().getId());
         order.setOrderCode(orderSaveRequestDto.getOrderCode());
-        order.setPackageId(orderSaveRequestDto.getAPackage().getId());
+        order.setPackageId(orderSaveRequestDto.getACPackage().getId());
         order.setOrderStatus(OrderStatus.INITIAL);
         return order;
     }
