@@ -5,6 +5,7 @@ import lombok.Getter;
 @Getter
 public enum CommercialStatus {
 
+    TRANSFERABLE(0),
     PURCHASEABLE(1),
     RENTABLE(2);
 

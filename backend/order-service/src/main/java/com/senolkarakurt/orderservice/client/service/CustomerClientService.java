@@ -1,6 +1,8 @@
 package com.senolkarakurt.orderservice.client.service;
 
+import com.senolkarakurt.enums.AccountType;
 import com.senolkarakurt.orderservice.client.CustomerClient;
+import com.senolkarakurt.orderservice.dto.request.CustomerUpdateRequestDto;
 import com.senolkarakurt.orderservice.exception.ExceptionMessagesResource;
 import com.senolkarakurt.orderservice.model.Customer;
 import com.senolkarakurt.exception.CommonException;
@@ -23,6 +25,15 @@ public class CustomerClientService {
             throw new CommonException(exceptionMessagesResource.getCustomerNotFound());
         }
         return customer;
+    }
+
+    public void changeAccountTypeAndScore(Customer customer, AccountType accountType, Integer score){
+        CustomerUpdateRequestDto customerUpdateRequestDto = CustomerUpdateRequestDto.builder()
+                .customer(customer)
+                .accountType(accountType)
+                .score(score)
+                .build();
+        customerClient.changeAccountTypeAndScore(customerUpdateRequestDto);
     }
 
 }

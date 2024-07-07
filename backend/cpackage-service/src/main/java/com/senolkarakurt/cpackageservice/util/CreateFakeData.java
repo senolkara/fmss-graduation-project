@@ -16,6 +16,7 @@ public class CreateFakeData {
         List<CPackage> cPackageList = new ArrayList<>();
         CPackage cPackage = new CPackage();
         cPackage.setPackageType(PackageType.PREMIUM);
+        //cPackage.setPackageType(PackageType.fromValue(1));
         cPackage.setDescription("Premium Paket");
         cPackage.setPrice(BigDecimal.valueOf(10000));
         cPackageList.add(cPackage);

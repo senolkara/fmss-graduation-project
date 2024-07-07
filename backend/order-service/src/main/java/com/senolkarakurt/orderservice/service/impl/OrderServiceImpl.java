@@ -2,6 +2,7 @@ package com.senolkarakurt.orderservice.service.impl;
 
 import com.senolkarakurt.dto.request.OrderRequestDto;
 import com.senolkarakurt.dto.response.*;
+import com.senolkarakurt.enums.AccountType;
 import com.senolkarakurt.enums.OrderStatus;
 import com.senolkarakurt.exception.CommonException;
 import com.senolkarakurt.orderservice.client.service.*;
@@ -23,6 +24,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,12 +49,13 @@ public class OrderServiceImpl implements OrderService {
         OrderSaveRequestDto orderSaveRequestDto = getOrderSaveRequestDto(orderRequestDto);
         Order order = OrderConverter.toOrderByOrderSaveRequestDto(orderSaveRequestDto);
         order.setOrderStatus(OrderStatus.IN_PROGRESS);
-        orderRepository.save(order);
+        order = orderRepository.save(order);
+        changeCustomerAccountTypeByOrder(order);
 
-        CPackage CPackageById = packageClientService.getPackageById(order.getPackageId());
+        CPackage cPackageById = packageClientService.getPackageById(order.getPackageId());
         Purchase purchase = Purchase.builder()
                 .createDateTime(LocalDateTime.now())
-                .totalPrice(CPackageById.getPrice())
+                .totalPrice(cPackageById.getPrice())
                 .orderId(order.getId())
                 .build();
         purchaseClientService.save(purchase);
@@ -110,6 +114,30 @@ public class OrderServiceImpl implements OrderService {
             });
         }
         return orderResponseDtoList;
+    }
+
+    private void changeCustomerAccountTypeByOrder(Order order){
+        CPackage cPackageById = packageClientService.getPackageById(order.getPackageId());
+        if (cPackageById.getPrice() == null ||
+        cPackageById.getPrice().compareTo(BigDecimal.ZERO) < 0){
+            log.error("%s : {}".formatted(exceptionMessagesResource.getPackagePriceDoingControl()));
+            throw new CommonException(exceptionMessagesResource.getPackagePriceDoingControl());
+        }
+        Integer score = cPackageById.getPrice().multiply(BigDecimal.valueOf(2))
+                .divide(BigDecimal.valueOf(100), 2, RoundingMode.HALF_UP).intValue();
+
+        Customer customer = customerClientService.getCustomerById(order.getCustomerId());
+        Integer totalScore = customer.getScore() + score;
+
+        AccountType accountType = customer.getAccountType();
+        if (totalScore.compareTo(1000) > 0){
+            accountType = AccountType.SILVER;
+        } else if (totalScore.compareTo(2000) > 0) {
+            accountType = AccountType.GOLD;
+        } else if (totalScore.compareTo(4000) > 0) {
+            accountType = AccountType.PLATINUM;
+        }
+        customerClientService.changeAccountTypeAndScore(customer, accountType, totalScore);
     }
 
     private OrderSaveRequestDto getOrderSaveRequestDto(OrderRequestDto orderRequestDto){

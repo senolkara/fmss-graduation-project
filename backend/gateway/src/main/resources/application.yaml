@@ -20,8 +20,8 @@ spring:
           uri: lb://ADVERTISEMENT-SERVICE
           predicates:
             - Path=/api/v1/advertisements/**
-        - id: package-service
-          uri: lb://PACKAGE-SERVICE
+        - id: cpackage-service
+          uri: lb://CPACKAGE-SERVICE
           predicates:
             - Path=/api/v1/packages/**
         - id: notification-service

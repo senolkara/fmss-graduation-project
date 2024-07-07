@@ -5,6 +5,7 @@ import lombok.Getter;
 @Getter
 public enum AdvertisementStatus {
 
+    DRAFT(0),
     ACTIVE(1),
     PASSIVE(2),
     IN_REVIEW(3);

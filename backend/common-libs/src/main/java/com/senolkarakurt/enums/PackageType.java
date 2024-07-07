@@ -5,6 +5,7 @@ import lombok.Getter;
 @Getter
 public enum PackageType {
 
+    STANDARD(0),
     PREMIUM(1);
 
     private final Integer value;
