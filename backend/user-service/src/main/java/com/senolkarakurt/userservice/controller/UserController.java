@@ -26,28 +26,6 @@ public class UserController {
         return userService.save(userRequestDto);
     }
 
-    @GetMapping
-    public GenericResponse<List<UserResponseDto>> getAll() {
-        return GenericResponse.success(userService.getAll());
-    }
-
-    @GetMapping("/{id}")
-    public GenericResponse<UserResponseDto> getById(@PathVariable("id") Long id) {
-        UserResponseDto userResponseDto = userService.getById(id);
-        return GenericResponse.success(userResponseDto);
-    }
-
-    @GetMapping("/{email}")
-    public GenericResponse<UserResponseDto> getByEmail(@PathVariable("email") String email) {
-        UserResponseDto userResponseDto = userService.getByEmail(email);
-        return GenericResponse.success(userResponseDto);
-    }
-
-    @GetMapping("/email/{email}")
-    public User getUserByEmail(@PathVariable("email") String email) {
-        return userService.getUserByEmail(email);
-    }
-
     @GetMapping("/id/{id}")
     public User getUserById(@PathVariable("id") Long id) {
         return userService.getUserById(id);

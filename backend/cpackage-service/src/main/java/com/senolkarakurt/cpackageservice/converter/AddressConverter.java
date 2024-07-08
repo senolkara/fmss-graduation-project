@@ -23,6 +23,7 @@ public class AddressConverter {
     public static AddressResponseDto toAddressResponseDtoByAddress(Address address){
         AddressResponseDto addressResponseDto = new AddressResponseDto();
         addressResponseDto.setId(address.getId());
+        addressResponseDto.setRecordStatus(address.getRecordStatus());
         addressResponseDto.setTitle(address.getTitle());
         addressResponseDto.setProvince(address.getProvince());
         addressResponseDto.setDistrict(address.getDistrict());

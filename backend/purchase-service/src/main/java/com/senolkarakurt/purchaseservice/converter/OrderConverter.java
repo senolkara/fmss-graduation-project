@@ -11,6 +11,7 @@ public class OrderConverter {
     public static OrderResponseDto toOrderResponseDtoByOrder(Order order){
         OrderResponseDto orderResponseDto = new OrderResponseDto();
         orderResponseDto.setId(order.getId());
+        orderResponseDto.setRecordStatus(order.getRecordStatus());
         orderResponseDto.setCreateDateTime(order.getCreateDateTime());
         orderResponseDto.setOrderCode(order.getOrderCode());
         orderResponseDto.setOrderStatus(order.getOrderStatus());

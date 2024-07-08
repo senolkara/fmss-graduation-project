@@ -1,6 +1,5 @@
 package com.senolkarakurt.purchaseservice.converter;
 
-import com.senolkarakurt.dto.request.AddressRequestDto;
 import com.senolkarakurt.dto.response.AddressResponseDto;
 import com.senolkarakurt.purchaseservice.model.Address;
 import lombok.AccessLevel;
@@ -24,6 +23,7 @@ public class AddressConverter {
     public static AddressResponseDto toAddressResponseDtoByAddress(Address address){
         AddressResponseDto addressResponseDto = new AddressResponseDto();
         addressResponseDto.setId(address.getId());
+        addressResponseDto.setRecordStatus(address.getRecordStatus());
         addressResponseDto.setTitle(address.getTitle());
         addressResponseDto.setProvince(address.getProvince());
         addressResponseDto.setDistrict(address.getDistrict());
@@ -31,17 +31,5 @@ public class AddressConverter {
         addressResponseDto.setStreet(address.getStreet());
         addressResponseDto.setDescription(address.getDescription());
         return addressResponseDto;
-    }
-
-    public static AddressRequestDto toAddressRequestDtoByAddress(Address address){
-        AddressRequestDto addressRequestDto = new AddressRequestDto();
-        addressRequestDto.setId(address.getId());
-        addressRequestDto.setTitle(address.getTitle());
-        addressRequestDto.setProvince(address.getProvince());
-        addressRequestDto.setDistrict(address.getDistrict());
-        addressRequestDto.setNeighbourhood(address.getNeighbourhood());
-        addressRequestDto.setStreet(address.getStreet());
-        addressRequestDto.setDescription(address.getDescription());
-        return addressRequestDto;
     }
 }

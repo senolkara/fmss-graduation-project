@@ -33,12 +33,6 @@ public class PackageController {
         return GenericResponse.success(packageService.getAllByCustomerId(customerId));
     }
 
-    @GetMapping("/{id}")
-    public GenericResponse<CustomerPackageResponseDto> getById(@PathVariable("id") Long id) {
-        CustomerPackageResponseDto customerPackageResponseDto = packageService.getById(id);
-        return GenericResponse.success(customerPackageResponseDto);
-    }
-
     @GetMapping("/id/{id}")
     public CPackage getPackageById(@PathVariable("id") Long id) {
         return packageService.getPackageById(id);

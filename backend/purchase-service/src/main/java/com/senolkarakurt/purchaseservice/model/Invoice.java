@@ -1,5 +1,6 @@
 package com.senolkarakurt.purchaseservice.model;
 
+import com.senolkarakurt.enums.RecordStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,6 +22,10 @@ public class Invoice implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
+
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "record_status", nullable = false)
+    private RecordStatus recordStatus;
 
     @Column(name = "total_price", nullable = false)
     private BigDecimal totalPrice;

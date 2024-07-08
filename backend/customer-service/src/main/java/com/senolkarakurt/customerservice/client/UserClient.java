@@ -16,9 +16,6 @@ public interface UserClient {
     @PostMapping("/save")
     User save(UserRequestDto userRequestDto);
 
-    @GetMapping("/id/{id}")
-    User getUserById(@PathVariable("id") Long id);
-
     @GetMapping("/userId/{userId}")
     Set<Address> getAddressesByUserId(@PathVariable("userId") Long userId);
 

@@ -4,6 +4,7 @@ import com.senolkarakurt.dto.request.OrderRequestDto;
 import com.senolkarakurt.dto.response.*;
 import com.senolkarakurt.enums.AccountType;
 import com.senolkarakurt.enums.OrderStatus;
+import com.senolkarakurt.enums.RecordStatus;
 import com.senolkarakurt.exception.CommonException;
 import com.senolkarakurt.orderservice.client.service.*;
 import com.senolkarakurt.orderservice.converter.*;
@@ -71,18 +72,16 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderResponseDto getById(Long id) {
+    public Order getOrderById(Long id) {
         Optional<Order> orderOptional = orderRepository.findById(id);
         if (orderOptional.isEmpty()){
             log.error("%s : {} %s".formatted(exceptionMessagesResource.getOrderNotFoundWithId(), id));
             throw new CommonException(exceptionMessagesResource.getOrderNotFoundWithId());
         }
-        return getOrderResponseDto(orderOptional.get());
-    }
-
-    @Override
-    public Order getOrderById(Long id) {
-        Optional<Order> orderOptional = orderRepository.findById(id);
+        if (!orderOptional.get().getRecordStatus().equals(RecordStatus.ACTIVE)){
+            log.error("%s : {} %s".formatted(exceptionMessagesResource.getOrderNotFoundWithId(), id));
+            throw new CommonException(exceptionMessagesResource.getOrderNotFoundWithId());
+        }
         return orderOptional.orElse(null);
     }
 

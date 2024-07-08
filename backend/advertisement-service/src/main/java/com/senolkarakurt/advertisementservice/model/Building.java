@@ -2,13 +2,11 @@ package com.senolkarakurt.advertisementservice.model;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.senolkarakurt.enums.CommercialStatus;
 import com.senolkarakurt.enums.RecordStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 
 @JsonTypeInfo(
         use = JsonTypeInfo.Id.NAME,
@@ -34,10 +32,6 @@ public abstract class Building implements Serializable {
     private Long id;
 
     @Enumerated(EnumType.ORDINAL)
-    @Column(name = "commercial_status", nullable = false)
-    private CommercialStatus commercialStatus;
-
-    @Enumerated(EnumType.ORDINAL)
     @Column(name = "record_status", nullable = false)
     private RecordStatus recordStatus;
 
@@ -59,7 +53,7 @@ public abstract class Building implements Serializable {
     @Column(name = "floor_count", nullable = false)
     private Integer floorCount;
 
-    @Column(name = "price", nullable = false)
-    private BigDecimal price;
+    @Column(name = "how_old_is_it", nullable = false)
+    private Integer howOldIsIt;
 
 }

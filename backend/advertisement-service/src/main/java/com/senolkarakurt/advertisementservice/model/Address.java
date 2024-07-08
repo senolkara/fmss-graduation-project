@@ -1,5 +1,6 @@
 package com.senolkarakurt.advertisementservice.model;
 
+import com.senolkarakurt.enums.RecordStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -11,13 +12,17 @@ import java.io.Serializable;
 @NoArgsConstructor
 @ToString
 @Entity
-@Table(name = "addresses")
+@Table(name = "user_addresses")
 public class Address implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
+
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "record_status", nullable = false)
+    private RecordStatus recordStatus;
 
     @Column(name = "title")
     private String title;

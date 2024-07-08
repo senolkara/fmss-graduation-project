@@ -16,6 +16,7 @@ import com.senolkarakurt.dto.request.AdvertisementRequestDto;
 import com.senolkarakurt.dto.response.*;
 import com.senolkarakurt.enums.AdvertisementStatus;
 import com.senolkarakurt.enums.NotificationType;
+import com.senolkarakurt.enums.RecordStatus;
 import com.senolkarakurt.exception.CommonException;
 import com.senolkarakurt.util.GenerateRandomUnique;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -46,14 +48,9 @@ public class AdvertisementServiceImpl implements AdvertisementService {
         CustomerPackage customerPackage = packageClientService.getCustomerPackageById(advertisementRequestDto.getCustomerPackageRequestDto().getId());
         controlAdvertisementPackage(customerPackage);
         Building building = getBuildingById(advertisementRequestDto.getBuildingRequestDto().getId());
-        Advertisement advertisement = Advertisement.builder()
-                .advertisementStatus(AdvertisementStatus.IN_REVIEW)
-                .advertisementNo(GenerateRandomUnique.createRandomAdvertisementNo())
-                .startDateTime(LocalDateTime.now())
-                .finishDateTime(LocalDateTime.now().plusDays(30))
-                .buildingId(building.getId())
-                .customerPackageId(customerPackage.getId())
-                .build();
+        controlBuilding(building);
+        Advertisement advertisement = AdvertisementConverter.toAdvertisementByAdvertisementRequestDto(advertisementRequestDto);
+        advertisement.setBuildingId(building.getId());
         advertisementRepository.save(advertisement);
         Integer advertisementCount = customerPackage.getAdvertisementCount() - 1;
         packageClientService.changeCustomerPackageAdvertisementCount(customerPackage.getId(), advertisementCount);
@@ -66,11 +63,29 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     }
 
     @Override
-    public List<AdvertisementResponseDto> getAll() {
+    public List<AdvertisementResponseDto> getAllByCustomerId(Long customerId) {
         List<AdvertisementResponseDto> advertisementResponseDtoList = new ArrayList<>();
-        advertisementRepository.findAll().forEach(advertisement -> {
-            advertisementResponseDtoList.add(getAdvertisementResponseDto(advertisement));
-        });
+        List<Advertisement> advertisementList = advertisementRepository.findAll()
+                .stream()
+                .filter(advertisement -> packageClientService.getCustomerPackageById(advertisement.getCustomerPackageId()).getCustomerId().equals(customerId))
+                .toList();
+        advertisementList.forEach(advertisement -> advertisementResponseDtoList.add(getAdvertisementResponseDto(advertisement)));
+        return advertisementResponseDtoList;
+    }
+
+    @Override
+    public List<AdvertisementResponseDto> getAllByCustomerIdFilterByStatus(Long customerId, Integer status) {
+        List<AdvertisementResponseDto> advertisementResponseDtoList = getAllByCustomerId(customerId);
+        if (status != null){
+            AdvertisementStatus advertisementStatus = AdvertisementStatus.fromValue(status);
+            if (advertisementStatus == null){
+                return advertisementResponseDtoList;
+            }
+            return getAllByCustomerId(customerId)
+                    .stream()
+                    .filter(advertisementResponseDto -> advertisementResponseDto.getAdvertisementStatus().equals(advertisementStatus))
+                    .collect(Collectors.toList());
+        }
         return advertisementResponseDtoList;
     }
 
@@ -94,6 +109,14 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     public Building getBuildingById(Long id){
         Optional<Building> buildingOptional = buildingRepository.findById(id);
         return buildingOptional.orElse(null);
+    }
+
+    private void controlBuilding(Building building){
+        if (building == null ||
+                !building.getRecordStatus().equals(RecordStatus.ACTIVE)){
+            log.error("%s : {}".formatted(exceptionMessagesResource.getBuildingNotFound()));
+            throw new CommonException(exceptionMessagesResource.getBuildingNotFound());
+        }
     }
 
     @Override

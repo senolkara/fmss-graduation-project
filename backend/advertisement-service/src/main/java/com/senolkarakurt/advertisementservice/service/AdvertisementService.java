@@ -11,7 +11,8 @@ import java.util.List;
 
 public interface AdvertisementService {
     void save(AdvertisementRequestDto advertisementRequestDto);
-    List<AdvertisementResponseDto> getAll();
+    List<AdvertisementResponseDto> getAllByCustomerId(Long customerId);
+    List<AdvertisementResponseDto> getAllByCustomerIdFilterByStatus(Long customerId, Integer status);
     AdvertisementResponseDto getById(Long id);
     Advertisement getAdvertisementById(Long id);
     Building getBuildingById(Long id);

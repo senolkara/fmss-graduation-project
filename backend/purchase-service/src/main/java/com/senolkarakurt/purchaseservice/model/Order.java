@@ -1,6 +1,7 @@
 package com.senolkarakurt.purchaseservice.model;
 
 import com.senolkarakurt.enums.OrderStatus;
+import com.senolkarakurt.enums.RecordStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -20,6 +21,10 @@ public class Order implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
+
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "record_status", nullable = false)
+    private RecordStatus recordStatus;
 
     @Column(name = "create_date_time", nullable = false)
     private LocalDateTime createDateTime;

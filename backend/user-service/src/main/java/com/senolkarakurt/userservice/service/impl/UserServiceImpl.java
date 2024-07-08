@@ -1,7 +1,7 @@
 package com.senolkarakurt.userservice.service.impl;
 
 import com.senolkarakurt.dto.request.UserRequestDto;
-import com.senolkarakurt.dto.response.UserResponseDto;
+import com.senolkarakurt.enums.RecordStatus;
 import com.senolkarakurt.exception.CommonException;
 import com.senolkarakurt.userservice.converter.AddressConverter;
 import com.senolkarakurt.userservice.converter.UserConverter;
@@ -18,7 +18,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -47,76 +46,37 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
         Set<Address> addressSet = AddressConverter.toSetAddressBySetAddressRequestDto(userRequestDto.getAddressRequestDtoSet(), user);
         addressRepository.saveAll(addressSet);
-        //kaydetme işleminden sonra login işlemi sonra yapılacak
         return user;
-    }
-
-    @Override
-    public List<UserResponseDto> getAll() {
-        return UserConverter.toResponse(userRepository.findAll());
-    }
-
-    @Override
-    public UserResponseDto getByEmail(String email) {
-        Optional<User> userOptional = userRepository.findByEmail(email);
-        if (userOptional.isEmpty()){
-            log.error("%s : {} %s".formatted(exceptionMessagesResource.getUserNotFoundWithThisEmail(), email));
-            throw new CommonException(exceptionMessagesResource.getUserNotFoundWithThisEmail());
-        }
-        User user = userOptional.get();
-        if (!user.isActive()){
-            log.error("%s : {} %s".formatted(exceptionMessagesResource.getThisUserIsInActive(), user.getEmail()));
-            throw new CommonException(exceptionMessagesResource.getThisUserIsInActive());
-        }
-        return UserConverter.toUserResponseDtoByUser(userOptional.get());
-    }
-
-    @Override
-    public User getUserByEmail(String email) {
-        Optional<User> userOptional = userRepository.findByEmail(email);
-        return userOptional.orElse(null);
-    }
-
-    @Override
-    public UserResponseDto getByPhoneNumber(String phoneNumber) {
-        Optional<User> userOptional = userRepository.findByPhoneNumber(phoneNumber);
-        if (userOptional.isPresent()){
-            return UserConverter.toUserResponseDtoByUser(userOptional.get());
-        }
-        log.error("%s : {} %s".formatted(exceptionMessagesResource.getUserNotFoundWithThisPhoneNumber(), phoneNumber));
-        throw new CommonException(exceptionMessagesResource.getUserNotFoundWithThisPhoneNumber());
-    }
-
-    @Override
-    public UserResponseDto getById(Long id) {
-        Optional<User> userOptional = userRepository.findById(id);
-        if (userOptional.isPresent()){
-            return UserConverter.toUserResponseDtoByUser(userOptional.get());
-        }
-        log.error("%s : {} %s".formatted(exceptionMessagesResource.getUserNotFoundWithId(), id));
-        throw new CommonException(exceptionMessagesResource.getUserNotFoundWithId());
     }
 
     @Override
     public User getUserById(Long id) {
         Optional<User> userOptional = userRepository.findById(id);
+        if (userOptional.isEmpty()){
+            log.error("%s : {} %s".formatted(exceptionMessagesResource.getUserNotFoundWithId(), id));
+            throw new CommonException(exceptionMessagesResource.getUserNotFoundWithId());
+        }
+        if (!userOptional.get().getRecordStatus().equals(RecordStatus.ACTIVE)){
+            log.error("%s : {} %s".formatted(exceptionMessagesResource.getThisUserIsInActive(), userOptional.get().getEmail()));
+            throw new CommonException(exceptionMessagesResource.getThisUserIsInActive());
+        }
         return userOptional.orElse(null);
     }
 
     @Override
-    public List<User> getUserListByIds(List<Long> userIdList) {
-        return userRepository.findAllById(userIdList);
-    }
-
-    @Override
     public Set<Address> getAddressesByUserId(Long userId) {
-        return new HashSet<>(addressRepository.getAddressesByUserId(userId));
+        return new HashSet<>(addressRepository.findAddressesByUserIdAndRecordStatus(userId, RecordStatus.ACTIVE));
     }
 
     @Override
     public void login(LoginRequestDto loginRequestDto) {
-        User user = getUserByEmail(loginRequestDto.getEmail());
-        if (user == null){
+        Optional<User> userOptional = userRepository.findByEmail(loginRequestDto.getEmail());
+        if (userOptional.isEmpty()){
+            log.error("%s : {}".formatted(exceptionMessagesResource.getLoginFailed()));
+            throw new CommonException(exceptionMessagesResource.getLoginFailed());
+        }
+        User user = userOptional.get();
+        if (!user.getRecordStatus().equals(RecordStatus.ACTIVE)){
             log.error("%s : {}".formatted(exceptionMessagesResource.getLoginFailed()));
             throw new CommonException(exceptionMessagesResource.getLoginFailed());
         }
@@ -126,20 +86,6 @@ public class UserServiceImpl implements UserService {
             log.error("%s : {}".formatted(exceptionMessagesResource.getLoginFailed()));
             throw new CommonException(exceptionMessagesResource.getLoginFailed());
         }
-    }
-
-    private User getUser(String email){
-        Optional<User> userOptional = userRepository.findByEmail(email);
-        if (userOptional.isEmpty()){
-            log.error("%s : {} %s".formatted(exceptionMessagesResource.getUserNotFoundWithThisEmail(), email));
-            throw new CommonException(exceptionMessagesResource.getUserNotFoundWithThisEmail());
-        }
-        User user = userOptional.get();
-        if (!user.isActive()){
-            log.error("%s : {} %s".formatted(exceptionMessagesResource.getThisUserIsInActive(), user.getEmail()));
-            throw new CommonException(exceptionMessagesResource.getThisUserIsInActive());
-        }
-        return userOptional.get();
     }
 
 }

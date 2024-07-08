@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.senolkarakurt.enums.OrderStatus;
+import com.senolkarakurt.enums.RecordStatus;
 import lombok.*;
 
 import java.io.Serializable;
@@ -17,7 +18,9 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @ToString
 public class OrderResponseDto implements Serializable {
+
     private Long id;
+    private RecordStatus recordStatus;
 
     @JsonProperty("createDateTime")
     @JsonSerialize(using = LocalDateTimeSerializer.class)

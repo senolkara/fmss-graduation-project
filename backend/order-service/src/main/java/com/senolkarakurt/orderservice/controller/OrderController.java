@@ -26,17 +26,11 @@ public class OrderController {
     }
 
     /**
-     * Müşterini bütün siparişlerini listele
+     * Müşterinin bütün siparişlerini listele
      */
     @GetMapping("/customerId/{customerId}")
     public GenericResponse<List<OrderResponseDto>> getAllByCustomerId(@PathVariable("customerId") Long customerId) {
         return GenericResponse.success(orderService.getAllByCustomerId(customerId));
-    }
-
-    @GetMapping("/{id}")
-    public GenericResponse<OrderResponseDto> getById(@PathVariable("id") Long id) {
-        OrderResponseDto orderResponseDto = orderService.getById(id);
-        return GenericResponse.success(orderResponseDto);
     }
 
     @GetMapping("/id/{id}")

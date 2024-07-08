@@ -11,6 +11,7 @@ public class PurchaseConverter {
     public static PurchaseResponseDto toPurchaseResponseDtoByPurchase(Purchase purchase) {
         PurchaseResponseDto purchaseResponseDto = new PurchaseResponseDto();
         purchaseResponseDto.setId(purchase.getId());
+        purchaseResponseDto.setRecordStatus(purchase.getRecordStatus());
         purchaseResponseDto.setCreateDateTime(purchase.getCreateDateTime());
         return purchaseResponseDto;
     }

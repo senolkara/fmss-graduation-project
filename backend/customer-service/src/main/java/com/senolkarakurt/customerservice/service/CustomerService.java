@@ -9,8 +9,6 @@ import java.util.List;
 
 public interface CustomerService {
     void save(CustomerRequestDto customerRequestDto);
-    List<CustomerResponseDto> getAll();
-    CustomerResponseDto getById(Long id);
     Customer getCustomerById(Long id);
     void changeAccountTypeAndScore(CustomerUpdateRequestDto customerUpdateRequestDto);
 }

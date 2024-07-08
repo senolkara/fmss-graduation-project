@@ -1,9 +1,7 @@
 package com.senolkarakurt.customerservice.converter;
 
-import com.senolkarakurt.dto.request.UserRequestDto;
 import com.senolkarakurt.dto.response.UserResponseDto;
 import com.senolkarakurt.customerservice.model.User;
-import com.senolkarakurt.util.GenerateRandomUnique;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -17,21 +15,9 @@ public class UserConverter {
         userResponseDto.setSurname(user.getSurname());
         userResponseDto.setEmail(user.getEmail());
         userResponseDto.setPhoneNumber(user.getPhoneNumber());
-        userResponseDto.setActive(user.isActive());
+        userResponseDto.setRecordStatus(user.getRecordStatus());
         userResponseDto.setBirthDate(user.getBirthDate());
         return userResponseDto;
-    }
-
-    public static User toUserByUserRequestDto(UserRequestDto userRequestDto){
-        String password = GenerateRandomUnique.createRandomHash(userRequestDto.getPassword());
-        return new User(
-                userRequestDto.getName(),
-                userRequestDto.getSurname(),
-                userRequestDto.getEmail(),
-                password,
-                userRequestDto.getPhoneNumber(),
-                userRequestDto.getBirthDate()
-        );
     }
 
 }

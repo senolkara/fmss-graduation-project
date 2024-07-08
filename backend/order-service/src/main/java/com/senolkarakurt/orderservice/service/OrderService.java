@@ -10,7 +10,6 @@ import java.util.List;
 public interface OrderService {
     void save(OrderRequestDto orderRequestDto);
     List<OrderResponseDto> getAllByCustomerId(Long customerId);
-    OrderResponseDto getById(Long id);
     Order getOrderById(Long id);
     List<OrderResponseDto> search(OrderSearchRequestDto orderSearchRequestDto);
 }

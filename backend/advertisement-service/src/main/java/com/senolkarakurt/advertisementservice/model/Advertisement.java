@@ -1,10 +1,12 @@
 package com.senolkarakurt.advertisementservice.model;
 
 import com.senolkarakurt.enums.AdvertisementStatus;
+import com.senolkarakurt.enums.AdvertisementType;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Getter
@@ -23,6 +25,10 @@ public class Advertisement implements Serializable {
     private Long id;
 
     @Enumerated(EnumType.ORDINAL)
+    @Column(name = "advertisement_type", nullable = false)
+    private AdvertisementType advertisementType;
+
+    @Enumerated(EnumType.ORDINAL)
     @Column(name = "advertisement_status", nullable = false)
     private AdvertisementStatus advertisementStatus;
 
@@ -34,6 +40,9 @@ public class Advertisement implements Serializable {
 
     @Column(name = "finish_date_time", nullable = false)
     private LocalDateTime finishDateTime;
+
+    @Column(name = "price", nullable = false)
+    private BigDecimal price;
 
     @Column(name = "building_id")
     private Long buildingId;

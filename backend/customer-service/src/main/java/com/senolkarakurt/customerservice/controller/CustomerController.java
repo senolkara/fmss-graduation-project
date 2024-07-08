@@ -27,20 +27,6 @@ public class CustomerController {
         return GenericResponse.success(ExceptionSuccessCreatedMessage.CUSTOMER_CREATED);
     }
 
-    /**
-     * Tüm müşterileri listele
-     */
-    @GetMapping
-    public GenericResponse<List<CustomerResponseDto>> getAll() {
-        return GenericResponse.success(customerService.getAll());
-    }
-
-    @GetMapping("/{id}")
-    public GenericResponse<CustomerResponseDto> getById(@PathVariable("id") Long id) {
-        CustomerResponseDto customerResponseDto = customerService.getById(id);
-        return GenericResponse.success(customerResponseDto);
-    }
-
     @GetMapping("/id/{id}")
     public Customer getCustomerById(@PathVariable("id") Long id) {
         return customerService.getCustomerById(id);

@@ -16,17 +16,11 @@ public class InvoiceConverter {
     public static InvoiceResponseDto toInvoiceResponseDtoByInvoice(Invoice invoice) {
         InvoiceResponseDto invoiceResponseDto = new InvoiceResponseDto();
         invoiceResponseDto.setId(invoice.getId());
+        invoiceResponseDto.setRecordStatus(invoice.getRecordStatus());
         invoiceResponseDto.setTotalPrice(invoice.getTotalPrice());
         invoiceResponseDto.setCreateDateTime(invoice.getCreateDateTime());
         invoiceResponseDto.setInvoiceNo(invoice.getInvoiceNo());
         return invoiceResponseDto;
-    }
-
-    public static List<InvoiceResponseDto> toResponse(List<Invoice> invoiceList){
-        return invoiceList
-                .stream()
-                .map(InvoiceConverter::toInvoiceResponseDtoByInvoice)
-                .collect(Collectors.toList());
     }
 
     public static NotificationInvoiceDto toNotificationDtoByNotificationTypeAndInvoice(NotificationType notificationType, InvoiceResponseDto invoiceResponseDto){

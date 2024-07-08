@@ -19,11 +19,12 @@ public class AdvertisementConverter {
 
     public static Advertisement toAdvertisementByAdvertisementRequestDto(AdvertisementRequestDto advertisementRequestDto){
         return Advertisement.builder()
+                .advertisementType(advertisementRequestDto.getAdvertisementType())
                 .advertisementStatus(AdvertisementStatus.IN_REVIEW)
                 .advertisementNo(GenerateRandomUnique.createRandomAdvertisementNo())
                 .startDateTime(LocalDateTime.now())
                 .finishDateTime(LocalDateTime.now().plusDays(30))
-                .buildingId(advertisementRequestDto.getBuildingRequestDto().getId())
+                .price(advertisementRequestDto.getPrice())
                 .customerPackageId(advertisementRequestDto.getCustomerPackageRequestDto().getId())
                 .build();
     }
@@ -31,9 +32,11 @@ public class AdvertisementConverter {
     public static AdvertisementResponseDto toAdvertisementResponseDtoByAdvertisement(Advertisement advertisement){
         AdvertisementResponseDto advertisementResponseDto = new AdvertisementResponseDto();
         advertisementResponseDto.setId(advertisement.getId());
+        advertisementResponseDto.setAdvertisementType(advertisement.getAdvertisementType());
         advertisementResponseDto.setAdvertisementNo(advertisement.getAdvertisementNo());
         advertisementResponseDto.setStartDateTime(advertisement.getStartDateTime());
         advertisementResponseDto.setFinishDateTime(advertisement.getFinishDateTime());
+        advertisementResponseDto.setPrice(advertisement.getPrice());
         return advertisementResponseDto;
     }
 

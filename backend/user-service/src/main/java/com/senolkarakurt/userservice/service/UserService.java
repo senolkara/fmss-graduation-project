@@ -11,13 +11,7 @@ import java.util.Set;
 
 public interface UserService {
     User save(UserRequestDto userRequestDto);
-    List<UserResponseDto> getAll();
-    UserResponseDto getByEmail(String email);
-    User getUserByEmail(String email);
-    UserResponseDto getByPhoneNumber(String phoneNumber);
-    UserResponseDto getById(Long id);
     User getUserById(Long id);
-    List<User> getUserListByIds(List<Long> userIdList);
     Set<Address> getAddressesByUserId(Long userId);
     void login(LoginRequestDto loginRequestDto);
 }

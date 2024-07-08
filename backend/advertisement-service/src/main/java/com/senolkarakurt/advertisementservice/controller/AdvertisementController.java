@@ -27,9 +27,15 @@ public class AdvertisementController {
         return GenericResponse.success(ExceptionSuccessCreatedMessage.ADVERTISEMENT_CREATED);
     }
 
-    @GetMapping
-    public GenericResponse<List<AdvertisementResponseDto>> getAll() {
-        return GenericResponse.success(advertisementService.getAll());
+    @GetMapping("/customerId/{customerId}")
+    public GenericResponse<List<AdvertisementResponseDto>> getAllByCustomerId(@PathVariable("customerId") Long customerId) {
+        return GenericResponse.success(advertisementService.getAllByCustomerId(customerId));
+    }
+
+    @GetMapping("/customerId/{customerId}")
+    public GenericResponse<List<AdvertisementResponseDto>> getAllByCustomerIdFilterByStatus(@PathVariable("customerId") Long customerId,
+                                                                              @RequestParam(value = "status") Integer status) {
+        return GenericResponse.success(advertisementService.getAllByCustomerIdFilterByStatus(customerId, status));
     }
 
     @GetMapping("/{id}")

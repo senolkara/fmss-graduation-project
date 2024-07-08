@@ -80,16 +80,6 @@ public class PackageServiceImpl implements PackageService {
     }
 
     @Override
-    public CustomerPackageResponseDto getById(Long id) {
-        Optional<CustomerPackage> customerPackageOptional = customerPackageRepository.findByIdAndRecordStatus(id, RecordStatus.ACTIVE);
-        if (customerPackageOptional.isEmpty()){
-            log.error("%s : {} %s".formatted(exceptionMessagesResource.getPackageNotFoundWithId(), id));
-            throw new CommonException(exceptionMessagesResource.getPackageNotFoundWithId());
-        }
-        return getCustomerPackageResponseDto(customerPackageOptional.get());
-    }
-
-    @Override
     public CPackage getPackageById(Long id) {
         Optional<CPackage> packageOptional = packageRepository.findById(id);
         return packageOptional.orElse(null);
@@ -98,6 +88,10 @@ public class PackageServiceImpl implements PackageService {
     @Override
     public CustomerPackage getCustomerPackageById(Long id) {
         Optional<CustomerPackage> customerPackageOptional = customerPackageRepository.findByIdAndRecordStatus(id, RecordStatus.ACTIVE);
+        if (customerPackageOptional.isEmpty()){
+            log.error("%s : {} %s".formatted(exceptionMessagesResource.getPackageNotFoundWithId(), id));
+            throw new CommonException(exceptionMessagesResource.getPackageNotFoundWithId());
+        }
         return customerPackageOptional.orElse(null);
     }
 
@@ -108,9 +102,10 @@ public class PackageServiceImpl implements PackageService {
             log.error("%s : {} %s".formatted(exceptionMessagesResource.getPackageNotFoundWithId(), id));
             throw new CommonException(exceptionMessagesResource.getPackageNotFoundWithId());
         }
+        CustomerPackage customerPackage = customerPackageOptional.get();
         if (advertisementCount >= 0){
-            customerPackageOptional.get().setAdvertisementCount(advertisementCount);
-            customerPackageRepository.save(customerPackageOptional.get());
+            customerPackage.setAdvertisementCount(advertisementCount);
+            customerPackageRepository.save(customerPackage);
         }
     }
 

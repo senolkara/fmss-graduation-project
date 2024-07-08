@@ -29,15 +29,6 @@ public class UserClientService {
         return user;
     }
 
-    public User getUserById(Long id) {
-        User user = userClient.getUserById(id);
-        if (user.getId() == null) {
-            log.error("%s : {}".formatted(exceptionMessagesResource.getUserNotFoundWithId()));
-            throw new CommonException(exceptionMessagesResource.getUserNotFoundWithId());
-        }
-        return user;
-    }
-
     public Set<Address> getAddressesByUserId(Long userId){
         return userClient.getAddressesByUserId(userId);
     }

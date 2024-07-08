@@ -2,6 +2,7 @@ package com.senolkarakurt.userservice.converter;
 
 import com.senolkarakurt.dto.request.UserRequestDto;
 import com.senolkarakurt.dto.response.UserResponseDto;
+import com.senolkarakurt.enums.RecordStatus;
 import com.senolkarakurt.userservice.model.User;
 import com.senolkarakurt.util.GenerateRandomUnique;
 import lombok.AccessLevel;
@@ -20,21 +21,22 @@ public class UserConverter {
         userResponseDto.setSurname(user.getSurname());
         userResponseDto.setEmail(user.getEmail());
         userResponseDto.setPhoneNumber(user.getPhoneNumber());
-        userResponseDto.setActive(user.isActive());
+        userResponseDto.setRecordStatus(user.getRecordStatus());
         userResponseDto.setBirthDate(user.getBirthDate());
         return userResponseDto;
     }
 
     public static User toUserByUserRequestDto(UserRequestDto userRequestDto){
         String password = GenerateRandomUnique.createRandomHash(userRequestDto.getPassword());
-        return new User(
-                userRequestDto.getName(),
-                userRequestDto.getSurname(),
-                userRequestDto.getEmail(),
-                password,
-                userRequestDto.getPhoneNumber(),
-                userRequestDto.getBirthDate()
-        );
+        return User.builder()
+                .name(userRequestDto.getName())
+                .surname(userRequestDto.getSurname())
+                .email(userRequestDto.getEmail())
+                .password(password)
+                .phoneNumber(userRequestDto.getPhoneNumber())
+                .recordStatus(RecordStatus.ACTIVE)
+                .birthDate(userRequestDto.getBirthDate())
+                .build();
     }
 
     public static List<UserResponseDto> toResponse(List<User> userList) {

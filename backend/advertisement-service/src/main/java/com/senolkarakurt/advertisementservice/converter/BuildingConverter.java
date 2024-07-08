@@ -13,13 +13,11 @@ public class BuildingConverter {
         buildingResponseDto.setId(building.getId());
         buildingResponseDto.setName(building.getName());
         buildingResponseDto.setDescription(building.getDescription());
-        buildingResponseDto.setCommercialStatus(building.getCommercialStatus());
         buildingResponseDto.setRecordStatus(building.getRecordStatus());
         buildingResponseDto.setRoomCount(building.getRoomCount());
         buildingResponseDto.setFloorCount(building.getFloorCount());
         buildingResponseDto.setSaloonCount(building.getSaloonCount());
         buildingResponseDto.setSquareMeters(building.getSquareMeters());
-        buildingResponseDto.setPrice(building.getPrice());
         return buildingResponseDto;
     }
 }

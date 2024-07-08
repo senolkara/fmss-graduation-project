@@ -10,7 +10,6 @@ import java.util.List;
 public interface PackageService {
     void save(CustomerPackageRequestDto customerPackageRequestDto);
     List<CustomerPackageResponseDto> getAllByCustomerId(Long customerId);
-    CustomerPackageResponseDto getById(Long id);
     CPackage getPackageById(Long id);
     CustomerPackage getCustomerPackageById(Long id);
     void changeCustomerPackageAdvertisementCount(Long id, Integer advertisementCount);

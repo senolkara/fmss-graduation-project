@@ -1,5 +1,6 @@
 package com.senolkarakurt.userservice.model;
 
+import com.senolkarakurt.enums.RecordStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,6 +19,10 @@ public class Address implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
+
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "record_status", nullable = false)
+    private RecordStatus recordStatus;
 
     @Column(name = "title")
     private String title;

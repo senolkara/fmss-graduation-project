@@ -1,11 +1,9 @@
 package com.senolkarakurt.userservice.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.senolkarakurt.enums.RecordStatus;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -15,7 +13,9 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
+@AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @ToString
 @Entity
 @Table(name = "users")
@@ -46,20 +46,12 @@ public class User implements Serializable {
     @Column(name = "phone_number")
     private String phoneNumber;
 
-    @Column(name = "is_active")
-    private boolean isActive;
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "record_status", nullable = false)
+    private RecordStatus recordStatus;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     @Column(name = "birth_date")
     private LocalDate birthDate;
 
-    public User(String name, String surname, String email, String password, String phoneNumber, LocalDate birthDate) {
-        this.name = name;
-        this.surname = surname;
-        this.email = email;
-        this.password = password;
-        this.phoneNumber = phoneNumber;
-        this.isActive = true;
-        this.birthDate = birthDate;
-    }
 }

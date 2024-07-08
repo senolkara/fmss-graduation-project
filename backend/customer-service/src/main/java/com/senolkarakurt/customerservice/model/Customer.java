@@ -1,6 +1,7 @@
 package com.senolkarakurt.customerservice.model;
 
 import com.senolkarakurt.enums.AccountType;
+import com.senolkarakurt.enums.RecordStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -20,6 +21,10 @@ public class Customer implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
+
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "record_status", nullable = false)
+    private RecordStatus recordStatus;
 
     @Column(name = "user_id")
     private Long userId;
