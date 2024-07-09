@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class SummerHouseRequestDto extends BuildingRequestDto {
+public class SummerHouseRequestDto {
 
     private boolean isThereAFireplace;
 

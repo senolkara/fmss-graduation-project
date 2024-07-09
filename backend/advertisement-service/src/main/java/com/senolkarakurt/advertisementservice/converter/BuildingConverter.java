@@ -18,6 +18,7 @@ public class BuildingConverter {
         buildingResponseDto.setFloorCount(building.getFloorCount());
         buildingResponseDto.setSaloonCount(building.getSaloonCount());
         buildingResponseDto.setSquareMeters(building.getSquareMeters());
+        buildingResponseDto.setHowOldIsIt(building.getHowOldIsIt());
         return buildingResponseDto;
     }
 }

@@ -1,6 +1,5 @@
 package com.senolkarakurt.dto.request;
 
-import com.senolkarakurt.enums.RecordStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,9 +16,6 @@ import javax.validation.constraints.Size;
 public class BuildingRequestDto {
 
     private Long id;
-
-    @NotNull(message = "kayıt durumunu seçiniz!")
-    private RecordStatus recordStatus;
 
     @NotBlank(message = "ad alanını doldurunuz!")
     @Size(min = 2, max = 255)
@@ -43,7 +39,6 @@ public class BuildingRequestDto {
     private Integer howOldIsIt;
 
     private BuildingAddressRequestDto buildingAddressRequestDto;
-
     private HouseRequestDto houseRequestDto;
     private SummerHouseRequestDto summerHouseRequestDto;
     private VillaRequestDto villaRequestDto;
