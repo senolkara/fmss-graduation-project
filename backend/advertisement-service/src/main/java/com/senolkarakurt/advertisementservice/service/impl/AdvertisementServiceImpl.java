@@ -163,6 +163,14 @@ public class AdvertisementServiceImpl implements AdvertisementService {
             HouseResponseDto houseResponseDto = HouseConverter.toHouseResponseDtoByHouse(house);
             buildingResponseDto.setHouseResponseDto(houseResponseDto);
         }
+        if (building instanceof SummerHouse summerHouse){
+            SummerHouseResponseDto summerHouseResponseDto = SummerHouseConverter.toSummerHouseResponseDtoBySummerHouse(summerHouse);
+            buildingResponseDto.setSummerHouseResponseDto(summerHouseResponseDto);
+        }
+        if (building instanceof Villa villa){
+            VillaResponseDto villaResponseDto = VillaConverter.toVillaResponseDtoByVilla(villa);
+            buildingResponseDto.setVillaResponseDto(villaResponseDto);
+        }
         advertisementResponseDto.setBuildingResponseDto(buildingResponseDto);
         customerPackageResponseDto.setCustomerResponseDto(customerResponseDto);
         advertisementResponseDto.setCustomerPackageResponseDto(customerPackageResponseDto);

@@ -6,6 +6,7 @@ import com.senolkarakurt.dto.response.CustomerResponseDto;
 import com.senolkarakurt.customerservice.model.Customer;
 import com.senolkarakurt.enums.AccountType;
 import com.senolkarakurt.enums.NotificationType;
+import com.senolkarakurt.enums.RecordStatus;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -23,6 +24,7 @@ public class CustomerConverter {
 
     public static Customer toCustomerByCustomerSaveRequestDto(CustomerSaveRequestDto customerSaveRequestDto){
         return Customer.builder()
+                .recordStatus(RecordStatus.ACTIVE)
                 .userId(customerSaveRequestDto.getUserId())
                 .accountType(AccountType.STANDARD)
                 .score(0)

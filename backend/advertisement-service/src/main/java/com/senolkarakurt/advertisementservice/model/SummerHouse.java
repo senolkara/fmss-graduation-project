@@ -1,5 +1,6 @@
 package com.senolkarakurt.advertisementservice.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.Getter;
@@ -16,5 +17,8 @@ import java.io.Serializable;
 @Entity
 @Table(name = "summerhouses")
 public class SummerHouse extends Building implements Serializable {
+
+    @Column(name = "is_there_a_fireplace")
+    private boolean isThereAFireplace;
 
 }

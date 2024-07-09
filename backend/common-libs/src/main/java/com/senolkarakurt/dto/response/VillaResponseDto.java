@@ -12,4 +12,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 public class VillaResponseDto implements Serializable {
+
+    private boolean isThereAPool;
+
 }

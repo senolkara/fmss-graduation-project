@@ -12,4 +12,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SummerHouseResponseDto implements Serializable {
+
+    private boolean isThereAFireplace;
+
 }

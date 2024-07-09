@@ -10,4 +10,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SummerHouseRequestDto extends BuildingRequestDto {
+
+    private boolean isThereAFireplace;
+
 }

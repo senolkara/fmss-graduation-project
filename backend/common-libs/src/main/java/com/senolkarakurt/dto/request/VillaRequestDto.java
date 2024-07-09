@@ -10,4 +10,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class VillaRequestDto extends BuildingRequestDto {
+
+    private boolean isThereAPool;
+
 }

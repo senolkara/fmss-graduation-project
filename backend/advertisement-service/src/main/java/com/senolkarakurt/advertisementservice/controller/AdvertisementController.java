@@ -32,7 +32,7 @@ public class AdvertisementController {
         return GenericResponse.success(advertisementService.getAllByCustomerId(customerId));
     }
 
-    @GetMapping("/customerId/{customerId}")
+    @GetMapping("/customerId/{customerId}/filterByStatus")
     public GenericResponse<List<AdvertisementResponseDto>> getAllByCustomerIdFilterByStatus(@PathVariable("customerId") Long customerId,
                                                                               @RequestParam(value = "status") Integer status) {
         return GenericResponse.success(advertisementService.getAllByCustomerIdFilterByStatus(customerId, status));

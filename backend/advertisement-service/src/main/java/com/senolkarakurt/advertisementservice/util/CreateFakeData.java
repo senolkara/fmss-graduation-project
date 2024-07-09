@@ -27,6 +27,7 @@ public class CreateFakeData {
         house1.setRoomCount(10);
         house1.setSaloonCount(5);
         house1.setFloorCount(3);
+        house1.setHowOldIsIt(10);
         houseList.add(house1);
 
         House house2 = new House();
@@ -39,6 +40,7 @@ public class CreateFakeData {
         house2.setRoomCount(12);
         house2.setSaloonCount(6);
         house2.setFloorCount(3);
+        house2.setHowOldIsIt(10);
         houseList.add(house2);
 
         House house3 = new House();
@@ -50,6 +52,7 @@ public class CreateFakeData {
         house3.setRoomCount(16);
         house3.setSaloonCount(8);
         house3.setFloorCount(3);
+        house3.setHowOldIsIt(10);
         houseList.add(house3);
 
         return houseList;
@@ -59,6 +62,7 @@ public class CreateFakeData {
         List<Villa> villaList = new ArrayList<>();
 
         Villa villa1 = new Villa();
+        villa1.setThereAPool(true);
         villa1.setRecordStatus(RecordStatus.ACTIVE);
         villa1.setName("Sabancı Villası");
         villa1.setDescription("Sabancı ailesine ait villa");
@@ -66,9 +70,11 @@ public class CreateFakeData {
         villa1.setRoomCount(20);
         villa1.setSaloonCount(8);
         villa1.setFloorCount(2);
+        villa1.setHowOldIsIt(15);
         villaList.add(villa1);
 
         Villa villa2 = new Villa();
+        villa2.setThereAPool(true);
         villa2.setRecordStatus(RecordStatus.ACTIVE);
         villa2.setName("Koç Villası");
         villa2.setDescription("Koç ailesine ait villa");
@@ -76,9 +82,11 @@ public class CreateFakeData {
         villa2.setRoomCount(28);
         villa2.setSaloonCount(10);
         villa2.setFloorCount(2);
+        villa2.setHowOldIsIt(15);
         villaList.add(villa2);
 
         Villa villa3 = new Villa();
+        villa3.setThereAPool(false);
         villa3.setRecordStatus(RecordStatus.ACTIVE);
         villa3.setName("Ülker Villası");
         villa3.setDescription("Ülker ailesine ait villa");
@@ -86,6 +94,7 @@ public class CreateFakeData {
         villa3.setRoomCount(40);
         villa3.setSaloonCount(20);
         villa3.setFloorCount(2);
+        villa3.setHowOldIsIt(15);
         villaList.add(villa3);
 
         return villaList;
@@ -95,6 +104,7 @@ public class CreateFakeData {
         List<SummerHouse> summerHouseList = new ArrayList<>();
 
         SummerHouse summerHouse1 = new SummerHouse();
+        summerHouse1.setThereAFireplace(true);
         summerHouse1.setRecordStatus(RecordStatus.ACTIVE);
         summerHouse1.setName("Sabancı Yazlığı");
         summerHouse1.setDescription("Sabancı ailesine ait yazlık");
@@ -102,9 +112,11 @@ public class CreateFakeData {
         summerHouse1.setRoomCount(20);
         summerHouse1.setSaloonCount(8);
         summerHouse1.setFloorCount(2);
+        summerHouse1.setHowOldIsIt(20);
         summerHouseList.add(summerHouse1);
 
         SummerHouse summerHouse2 = new SummerHouse();
+        summerHouse2.setThereAFireplace(true);
         summerHouse2.setRecordStatus(RecordStatus.ACTIVE);
         summerHouse2.setName("Koç Yazlığı");
         summerHouse2.setDescription("Koç ailesine ait yazlık");
@@ -112,9 +124,11 @@ public class CreateFakeData {
         summerHouse2.setRoomCount(28);
         summerHouse2.setSaloonCount(10);
         summerHouse2.setFloorCount(2);
+        summerHouse2.setHowOldIsIt(20);
         summerHouseList.add(summerHouse2);
 
         SummerHouse summerHouse3 = new SummerHouse();
+        summerHouse3.setThereAFireplace(true);
         summerHouse3.setRecordStatus(RecordStatus.ACTIVE);
         summerHouse3.setName("Ülker Yazlığı");
         summerHouse3.setDescription("Ülker ailesine ait yazlık");
@@ -122,6 +136,7 @@ public class CreateFakeData {
         summerHouse3.setRoomCount(40);
         summerHouse3.setSaloonCount(20);
         summerHouse3.setFloorCount(2);
+        summerHouse3.setHowOldIsIt(20);
         summerHouseList.add(summerHouse3);
 
         return summerHouseList;
