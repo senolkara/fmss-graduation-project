@@ -5,6 +5,7 @@ import com.senolkarakurt.dto.request.CustomerRequestDto;
 import com.senolkarakurt.dto.request.PackageRequestDto;
 import com.senolkarakurt.dto.response.*;
 import com.senolkarakurt.enums.NotificationType;
+import com.senolkarakurt.enums.RecordStatus;
 import com.senolkarakurt.exception.CommonException;
 import com.senolkarakurt.purchaseservice.client.service.CustomerClientService;
 import com.senolkarakurt.purchaseservice.client.service.OrderClientService;
@@ -28,8 +29,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -52,6 +51,7 @@ public class PurchaseServiceImpl implements PurchaseService {
     public void save(PurchaseSaveRequestDto purchaseSaveRequestDto) {
         Purchase purchase = purchaseRepository.save(purchaseSaveRequestDto.getPurchase());
         Invoice invoice = Invoice.builder()
+                .recordStatus(RecordStatus.ACTIVE)
                 .createDateTime(LocalDateTime.now())
                 .purchaseId(purchase.getId())
                 .totalPrice(purchase.getTotalPrice())
@@ -70,36 +70,12 @@ public class PurchaseServiceImpl implements PurchaseService {
     }
 
     @Override
-    public List<PurchaseResponseDto> getAll() {
-        List<PurchaseResponseDto> purchaseResponseDtoList = new ArrayList<>();
-        purchaseRepository.findAll().forEach(purchase -> {
-            PurchaseResponseDto purchaseResponseDto = PurchaseConverter.toPurchaseResponseDtoByPurchase(purchase);
-            Order order = orderClientService.getOrderById(purchase.getOrderId());
-            OrderResponseDto orderResponseDto = getOrderResponseDto(order);
-            purchaseResponseDto.setOrderResponseDto(orderResponseDto);
-            purchaseResponseDtoList.add(purchaseResponseDto);
-        });
-        return purchaseResponseDtoList;
-    }
-
-    @Override
-    public PurchaseResponseDto getById(Long id) {
-        Optional<Purchase> purchaseOptional = purchaseRepository.findById(id);
+    public Purchase getPurchaseById(Long id) {
+        Optional<Purchase> purchaseOptional = purchaseRepository.findByIdAndAndRecordStatus(id, RecordStatus.ACTIVE);
         if (purchaseOptional.isEmpty()){
             log.error("%s : {} %s".formatted(exceptionMessagesResource.getPurchaseNotFoundWithId(), id));
             throw new CommonException(exceptionMessagesResource.getPurchaseNotFoundWithId());
         }
-        Purchase purchase = purchaseOptional.get();
-        Order order = orderClientService.getOrderById(purchase.getOrderId());
-        OrderResponseDto orderResponseDto = getOrderResponseDto(order);
-        PurchaseResponseDto purchaseResponseDto = PurchaseConverter.toPurchaseResponseDtoByPurchase(purchase);
-        purchaseResponseDto.setOrderResponseDto(orderResponseDto);
-        return purchaseResponseDto;
-    }
-
-    @Override
-    public Purchase getPurchaseById(Long id) {
-        Optional<Purchase> purchaseOptional = purchaseRepository.findById(id);
         return purchaseOptional.orElse(null);
     }
 

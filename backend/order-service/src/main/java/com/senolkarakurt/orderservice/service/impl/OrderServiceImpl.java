@@ -55,6 +55,7 @@ public class OrderServiceImpl implements OrderService {
 
         CPackage cPackageById = packageClientService.getPackageById(order.getPackageId());
         Purchase purchase = Purchase.builder()
+                .recordStatus(RecordStatus.ACTIVE)
                 .createDateTime(LocalDateTime.now())
                 .totalPrice(cPackageById.getPrice())
                 .orderId(order.getId())
