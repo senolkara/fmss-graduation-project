@@ -1,5 +1,6 @@
 package com.senolkarakurt.customerservice.service.impl;
 
+import com.senolkarakurt.customerservice.client.service.AuthenticationClientService;
 import com.senolkarakurt.customerservice.client.service.UserClientService;
 import com.senolkarakurt.customerservice.converter.AddressConverter;
 import com.senolkarakurt.customerservice.converter.CustomerConverter;
@@ -31,12 +32,13 @@ public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerRepository customerRepository;
     private final UserClientService userClientService;
+    private final AuthenticationClientService authenticationClientService;
     private final ExceptionMessagesResource exceptionMessagesResource;
     private final NotificationCustomerProducer notificationCustomerProducer;
 
     @Override
     public void save(CustomerRequestDto customerRequestDto) {
-        User user = userClientService.save(customerRequestDto.getUserRequestDto());
+        User user = authenticationClientService.register(customerRequestDto.getUserRequestDto());
         CustomerSaveRequestDto customerSaveRequestDto = CustomerSaveRequestDto.builder()
                 .userId(user.getId())
                 .build();

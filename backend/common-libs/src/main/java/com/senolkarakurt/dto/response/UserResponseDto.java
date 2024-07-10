@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.senolkarakurt.enums.RecordStatus;
+import com.senolkarakurt.enums.RoleType;
 import lombok.*;
 
 import java.io.Serializable;
@@ -23,11 +24,13 @@ public class UserResponseDto implements Serializable {
     private String surname;
     private String email;
     private String phoneNumber;
+    private RoleType roleType;
     private RecordStatus recordStatus;
-    private Set<AddressResponseDto> addressResponseDtoSet;
 
     @JsonProperty("birthDate")
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate birthDate;
+
+    private Set<AddressResponseDto> addressResponseDtoSet;
 }

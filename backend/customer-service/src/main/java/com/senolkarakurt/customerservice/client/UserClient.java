@@ -13,9 +13,6 @@ import java.util.Set;
 @FeignClient(value = "user-service", url = "http://localhost:8090/api/v1/users")
 public interface UserClient {
 
-    @PostMapping("/save")
-    User save(UserRequestDto userRequestDto);
-
     @GetMapping("/userId/{userId}")
     Set<Address> getAddressesByUserId(@PathVariable("userId") Long userId);
 

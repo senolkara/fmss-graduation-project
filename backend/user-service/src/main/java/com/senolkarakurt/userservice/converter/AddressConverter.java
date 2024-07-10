@@ -31,4 +31,28 @@ public class AddressConverter {
         return addresses;
     }
 
+    public static Set<AddressResponseDto> toSetAddressesResponseDtoBySetAddresses(Set<Address> addresses){
+        Set<AddressResponseDto> addressResponseDtoSet = new HashSet<>();
+        if (addresses != null){
+            addresses.forEach(address -> {
+                AddressResponseDto addressResponseDto = toAddressResponseDtoByAddress(address);
+                addressResponseDtoSet.add(addressResponseDto);
+            });
+        }
+        return addressResponseDtoSet;
+    }
+
+    public static AddressResponseDto toAddressResponseDtoByAddress(Address address){
+        AddressResponseDto addressResponseDto = new AddressResponseDto();
+        addressResponseDto.setId(address.getId());
+        addressResponseDto.setRecordStatus(address.getRecordStatus());
+        addressResponseDto.setTitle(address.getTitle());
+        addressResponseDto.setProvince(address.getProvince());
+        addressResponseDto.setDistrict(address.getDistrict());
+        addressResponseDto.setNeighbourhood(address.getNeighbourhood());
+        addressResponseDto.setStreet(address.getStreet());
+        addressResponseDto.setDescription(address.getDescription());
+        return addressResponseDto;
+    }
+
 }

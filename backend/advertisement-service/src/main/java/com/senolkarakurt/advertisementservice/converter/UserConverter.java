@@ -17,6 +17,7 @@ public class UserConverter {
         userResponseDto.setPhoneNumber(user.getPhoneNumber());
         userResponseDto.setRecordStatus(user.getRecordStatus());
         userResponseDto.setBirthDate(user.getBirthDate());
+        userResponseDto.setRoleType(user.getRoleType());
         return userResponseDto;
     }
 

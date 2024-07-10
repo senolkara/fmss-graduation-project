@@ -3,6 +3,7 @@ package com.senolkarakurt.userservice.converter;
 import com.senolkarakurt.dto.request.UserRequestDto;
 import com.senolkarakurt.dto.response.UserResponseDto;
 import com.senolkarakurt.enums.RecordStatus;
+import com.senolkarakurt.enums.RoleType;
 import com.senolkarakurt.userservice.model.User;
 import com.senolkarakurt.util.GenerateRandomUnique;
 import lombok.AccessLevel;
@@ -23,19 +24,19 @@ public class UserConverter {
         userResponseDto.setPhoneNumber(user.getPhoneNumber());
         userResponseDto.setRecordStatus(user.getRecordStatus());
         userResponseDto.setBirthDate(user.getBirthDate());
+        userResponseDto.setRoleType(user.getRoleType());
         return userResponseDto;
     }
 
     public static User toUserByUserRequestDto(UserRequestDto userRequestDto){
-        String password = GenerateRandomUnique.createRandomHash(userRequestDto.getPassword());
         return User.builder()
                 .name(userRequestDto.getName())
                 .surname(userRequestDto.getSurname())
                 .email(userRequestDto.getEmail())
-                .password(password)
                 .phoneNumber(userRequestDto.getPhoneNumber())
                 .recordStatus(RecordStatus.ACTIVE)
                 .birthDate(userRequestDto.getBirthDate())
+                .roleType(RoleType.USER)
                 .build();
     }
 

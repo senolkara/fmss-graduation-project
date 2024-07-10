@@ -2,6 +2,7 @@ package com.senolkarakurt.orderservice.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.senolkarakurt.enums.RecordStatus;
+import com.senolkarakurt.enums.RoleType;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -53,5 +54,9 @@ public class User implements Serializable {
     @JsonFormat(pattern = "yyyy-MM-dd")
     @Column(name = "birth_date")
     private LocalDate birthDate;
+
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "role_type", nullable = false)
+    private RoleType roleType;
 
 }

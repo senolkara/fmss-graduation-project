@@ -1,0 +1,39 @@
+package com.senolkarakurt.userservice.controller;
+
+import com.senolkarakurt.dto.request.UserRequestDto;
+import com.senolkarakurt.dto.response.UserResponseDto;
+import com.senolkarakurt.userservice.dto.request.AuthenticationRequestDto;
+import com.senolkarakurt.userservice.model.User;
+import com.senolkarakurt.userservice.service.AuthenticationService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.io.IOException;
+
+@RestController
+@RequestMapping("/api/v1/auth")
+@RequiredArgsConstructor
+public class AuthenticationController {
+
+    private final AuthenticationService authenticationService;
+
+    @PostMapping("/register")
+    public User register(@RequestBody UserRequestDto userRequestDto) {
+        return authenticationService.register(userRequestDto);
+    }
+    @PostMapping("/authenticate")
+    public UserResponseDto authenticate(@RequestBody AuthenticationRequestDto authenticationRequestDto) {
+        return authenticationService.authenticate(authenticationRequestDto);
+    }
+
+    @PostMapping("/refresh-token")
+    public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        authenticationService.refreshToken(request, response);
+    }
+
+}
