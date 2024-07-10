@@ -104,9 +104,9 @@ public class OrderServiceImpl implements OrderService {
                 orderSearchRequestDto.getPage(),
                 orderSearchRequestDto.getSize(),
                 Sort.by(orderSearchRequestDto.getSort().equals("DESC") ? Sort.Direction.DESC : Sort.Direction.ASC
-                        , "orderCode")
+                        , "createDateTime")
         );
-        Page<Order> orders = orderRepository.findAll(orderSpecification, pageRequest);
+        Page<Order> orders = orderRepository.findAllByCustomerId(orderSearchRequestDto.getCustomerRequestDto().getId(), orderSpecification, pageRequest);
         List<OrderResponseDto> orderResponseDtoList = new ArrayList<>();
         if (orders != null){
             orders.stream().toList().forEach(order -> {

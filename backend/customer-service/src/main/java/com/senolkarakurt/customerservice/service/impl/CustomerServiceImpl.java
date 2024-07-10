@@ -71,5 +71,6 @@ public class CustomerServiceImpl implements CustomerService {
         Customer customer = customerUpdateRequestDto.getCustomer();
         customer.setAccountType(customerUpdateRequestDto.getAccountType());
         customer.setScore(customerUpdateRequestDto.getScore());
+        customerRepository.save(customer);
     }
 }
