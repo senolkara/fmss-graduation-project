@@ -67,8 +67,13 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void changeAccountTypeAndScore(CustomerUpdateRequestDto customerUpdateRequestDto) {
-        Customer customer = customerUpdateRequestDto.getCustomer();
+    public void changeAccountTypeAndScore(Long id, CustomerUpdateRequestDto customerUpdateRequestDto) {
+        Optional<Customer> customerOptional = customerRepository.findById(id);
+        if (customerOptional.isEmpty()){
+            log.error("%s : {} %s".formatted(exceptionMessagesResource.getCustomerNotFoundWithId(), id));
+            throw new CommonException(exceptionMessagesResource.getCustomerNotFoundWithId());
+        }
+        Customer customer = customerOptional.get();
         customer.setAccountType(customerUpdateRequestDto.getAccountType());
         customer.setScore(customerUpdateRequestDto.getScore());
         customerRepository.save(customer);

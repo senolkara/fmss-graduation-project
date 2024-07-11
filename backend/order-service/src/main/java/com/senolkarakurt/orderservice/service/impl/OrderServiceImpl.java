@@ -137,7 +137,7 @@ public class OrderServiceImpl implements OrderService {
         } else if (totalScore.compareTo(4000) > 0) {
             accountType = AccountType.PLATINUM;
         }
-        customerClientService.changeAccountTypeAndScore(customer, accountType, totalScore);
+        customerClientService.changeAccountTypeAndScore(customer.getId(), accountType, totalScore);
     }
 
     private OrderSaveRequestDto getOrderSaveRequestDto(OrderRequestDto orderRequestDto){

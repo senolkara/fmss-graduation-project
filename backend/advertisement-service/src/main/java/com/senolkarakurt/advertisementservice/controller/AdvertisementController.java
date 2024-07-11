@@ -1,5 +1,6 @@
 package com.senolkarakurt.advertisementservice.controller;
 
+import com.senolkarakurt.advertisementservice.dto.request.AdvertisementUpdateRequestDto;
 import com.senolkarakurt.advertisementservice.model.Advertisement;
 import com.senolkarakurt.advertisementservice.service.AdvertisementService;
 import com.senolkarakurt.dto.request.AdvertisementRequestDto;
@@ -27,6 +28,18 @@ public class AdvertisementController {
         return GenericResponse.success(ExceptionSuccessCreatedMessage.ADVERTISEMENT_CREATED);
     }
 
+    @PutMapping("/update/{id}")
+    public GenericResponse<String> update(@PathVariable("id") Long id, @RequestBody AdvertisementUpdateRequestDto advertisementUpdateRequestDto) {
+        advertisementService.update(id, advertisementUpdateRequestDto);
+        return GenericResponse.success(ExceptionSuccessCreatedMessage.ADVERTISEMENT_UPDATED);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public GenericResponse<String> delete(@PathVariable("id") Long id) {
+        advertisementService.delete(id);
+        return GenericResponse.success(ExceptionSuccessCreatedMessage.ADVERTISEMENT_DELETED);
+    }
+
     @GetMapping("/customerId/{customerId}")
     public GenericResponse<List<AdvertisementResponseDto>> getAllByCustomerId(@PathVariable("customerId") Long customerId) {
         return GenericResponse.success(advertisementService.getAllByCustomerId(customerId));
@@ -36,12 +49,6 @@ public class AdvertisementController {
     public GenericResponse<List<AdvertisementResponseDto>> getAllByCustomerIdFilterByStatus(@PathVariable("customerId") Long customerId,
                                                                               @RequestParam(value = "status") Integer status) {
         return GenericResponse.success(advertisementService.getAllByCustomerIdFilterByStatus(customerId, status));
-    }
-
-    @GetMapping("/{id}")
-    public GenericResponse<AdvertisementResponseDto> getById(@PathVariable("id") Long id) {
-        AdvertisementResponseDto advertisementResponseDto = advertisementService.getById(id);
-        return GenericResponse.success(advertisementResponseDto);
     }
 
     @GetMapping("/id/{id}")

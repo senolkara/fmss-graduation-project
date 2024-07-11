@@ -32,8 +32,8 @@ public class CustomerController {
         return customerService.getCustomerById(id);
     }
 
-    @PostMapping("/changeAccountTypeAndScore")
-    public void changeAccountTypeAndScore(@RequestBody CustomerUpdateRequestDto customerUpdateRequestDto){
-        customerService.changeAccountTypeAndScore(customerUpdateRequestDto);
+    @PutMapping("/changeAccountTypeAndScore/{id}")
+    public void changeAccountTypeAndScore(@PathVariable("id") Long id, @RequestBody CustomerUpdateRequestDto customerUpdateRequestDto){
+        customerService.changeAccountTypeAndScore(id, customerUpdateRequestDto);
     }
 }

@@ -78,13 +78,13 @@ public class CustomerControllerTest {
         ObjectMapper objectMapper = new ObjectMapper();
         String body = objectMapper.writeValueAsString(prepareCustomerUpdateRequestDto());
 
-        ResultActions resultActions = mockMvc.perform(post("/api/v1/customers/changeAccountTypeAndScore")
+        ResultActions resultActions = mockMvc.perform(post("/api/v1/customers/changeAccountTypeAndScore/10")
                 .content(body)
                 .contentType(MediaType.APPLICATION_JSON))
                 ;
 
         resultActions.andExpect(status().isOk());
-        verify(customerService, times(1)).changeAccountTypeAndScore(Mockito.any(CustomerUpdateRequestDto.class));
+        verify(customerService, times(1)).changeAccountTypeAndScore(Mockito.any(), Mockito.any(CustomerUpdateRequestDto.class));
     }
 
     private UserRequestDto prepareUserRequestDto(){
@@ -108,7 +108,6 @@ public class CustomerControllerTest {
 
     private CustomerUpdateRequestDto prepareCustomerUpdateRequestDto(){
         CustomerUpdateRequestDto customerUpdateRequestDto = new CustomerUpdateRequestDto();
-        customerUpdateRequestDto.setCustomer(prepareCustomer());
         customerUpdateRequestDto.setAccountType(AccountType.STANDARD);
         customerUpdateRequestDto.setScore(0);
         return customerUpdateRequestDto;

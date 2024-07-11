@@ -4,6 +4,7 @@ import com.senolkarakurt.advertisementservice.client.service.CustomerClientServi
 import com.senolkarakurt.advertisementservice.client.service.PackageClientService;
 import com.senolkarakurt.advertisementservice.client.service.UserClientService;
 import com.senolkarakurt.advertisementservice.converter.*;
+import com.senolkarakurt.advertisementservice.dto.request.AdvertisementUpdateRequestDto;
 import com.senolkarakurt.advertisementservice.exception.ExceptionMessagesResource;
 import com.senolkarakurt.advertisementservice.model.*;
 import com.senolkarakurt.advertisementservice.model.CPackage;
@@ -18,7 +19,6 @@ import com.senolkarakurt.enums.AdvertisementStatus;
 import com.senolkarakurt.enums.NotificationType;
 import com.senolkarakurt.enums.RecordStatus;
 import com.senolkarakurt.exception.CommonException;
-import com.senolkarakurt.util.GenerateRandomUnique;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -46,6 +46,10 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     @Override
     public void save(AdvertisementRequestDto advertisementRequestDto) {
         CustomerPackage customerPackage = packageClientService.getCustomerPackageById(advertisementRequestDto.getCustomerPackageRequestDto().getId());
+        if (customerPackage.getId() == null){
+            log.error("%s : {} %s".formatted(exceptionMessagesResource.getPackageNotFoundWithId(), advertisementRequestDto.getCustomerPackageRequestDto().getId()));
+            throw new CommonException(exceptionMessagesResource.getPackageNotFoundWithId());
+        }
         controlAdvertisementPackage(customerPackage);
         Building building = getBuildingById(advertisementRequestDto.getBuildingRequestDto().getId());
         controlBuilding(building);
@@ -90,18 +94,12 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     }
 
     @Override
-    public AdvertisementResponseDto getById(Long id) {
+    public Advertisement getAdvertisementById(Long id) {
         Optional<Advertisement> advertisementOptional = advertisementRepository.findById(id);
         if (advertisementOptional.isEmpty()){
             log.error("%s : {} %s".formatted(exceptionMessagesResource.getAdvertisementNotFoundWithId(), id));
             throw new CommonException(exceptionMessagesResource.getAdvertisementNotFoundWithId());
         }
-        return getAdvertisementResponseDto(advertisementOptional.get());
-    }
-
-    @Override
-    public Advertisement getAdvertisementById(Long id) {
-        Optional<Advertisement> advertisementOptional = advertisementRepository.findById(id);
         return advertisementOptional.orElse(null);
     }
 
@@ -129,6 +127,30 @@ public class AdvertisementServiceImpl implements AdvertisementService {
         Advertisement advertisement = advertisementOptional.get();
         advertisement.setAdvertisementStatus(advertisementStatus);
         advertisementRepository.save(advertisement);
+    }
+
+    @Override
+    public void update(Long id, AdvertisementUpdateRequestDto advertisementUpdateRequestDto) {
+        Optional<Advertisement> advertisementOptional = advertisementRepository.findById(id);
+        if (advertisementOptional.isEmpty()){
+            log.error("%s : {} %s".formatted(exceptionMessagesResource.getAdvertisementNotFoundWithId(), id));
+            throw new CommonException(exceptionMessagesResource.getAdvertisementNotFoundWithId());
+        }
+        Advertisement advertisement = advertisementOptional.get();
+        advertisement.setAdvertisementType(advertisementUpdateRequestDto.getAdvertisementType());
+        advertisement.setPrice(advertisementUpdateRequestDto.getPrice());
+        advertisementRepository.save(advertisement);
+    }
+
+    @Override
+    public void delete(Long id) {
+        Optional<Advertisement> advertisementOptional = advertisementRepository.findById(id);
+        if (advertisementOptional.isEmpty()){
+            log.error("%s : {} %s".formatted(exceptionMessagesResource.getAdvertisementNotFoundWithId(), id));
+            throw new CommonException(exceptionMessagesResource.getAdvertisementNotFoundWithId());
+        }
+        Advertisement advertisement = advertisementOptional.get();
+        advertisementRepository.delete(advertisement);
     }
 
     private void controlAdvertisementPackage(CustomerPackage customerPackage){

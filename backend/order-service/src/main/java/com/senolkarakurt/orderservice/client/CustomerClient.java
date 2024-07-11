@@ -5,7 +5,7 @@ import com.senolkarakurt.orderservice.model.Customer;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 
 @FeignClient(value = "customer-service", url = "http://localhost:8091/api/v1/customers")
 public interface CustomerClient {
@@ -13,7 +13,7 @@ public interface CustomerClient {
     @GetMapping("/id/{id}")
     Customer getCustomerById(@PathVariable("id") Long id);
 
-    @PostMapping("/changeAccountTypeAndScore")
-    void changeAccountTypeAndScore(CustomerUpdateRequestDto customerUpdateRequestDto);
+    @PutMapping("/changeAccountTypeAndScore/{id}")
+    void changeAccountTypeAndScore(@PathVariable("id") Long id, CustomerUpdateRequestDto customerUpdateRequestDto);
 
 }

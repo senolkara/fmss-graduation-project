@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 public class ExceptionSuccessCreatedMessage {
     public static final String CUSTOMER_CREATED = "müşteri oluşturuldu";
     public static final String ADVERTISEMENT_CREATED = "İlan oluşturuldu";
+    public static final String ADVERTISEMENT_UPDATED = "İlan güncellendi";
+    public static final String ADVERTISEMENT_DELETED = "İlan silindi";
     public static final String PACKAGE_CREATED = "Paket oluşturuldu";
     public static final String USER_CREATED = "Kullanıcı oluşturuldu";
     public static final String ORDER_CREATED = "Sipariş verildi";

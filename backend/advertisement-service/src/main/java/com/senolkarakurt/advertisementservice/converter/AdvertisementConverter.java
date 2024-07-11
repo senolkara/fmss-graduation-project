@@ -32,6 +32,7 @@ public class AdvertisementConverter {
     public static AdvertisementResponseDto toAdvertisementResponseDtoByAdvertisement(Advertisement advertisement){
         AdvertisementResponseDto advertisementResponseDto = new AdvertisementResponseDto();
         advertisementResponseDto.setId(advertisement.getId());
+        advertisementResponseDto.setAdvertisementStatus(advertisement.getAdvertisementStatus());
         advertisementResponseDto.setAdvertisementType(advertisement.getAdvertisementType());
         advertisementResponseDto.setAdvertisementNo(advertisement.getAdvertisementNo());
         advertisementResponseDto.setStartDateTime(advertisement.getStartDateTime());

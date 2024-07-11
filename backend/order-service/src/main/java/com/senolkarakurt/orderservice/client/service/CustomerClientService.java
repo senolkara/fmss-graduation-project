@@ -27,13 +27,12 @@ public class CustomerClientService {
         return customer;
     }
 
-    public void changeAccountTypeAndScore(Customer customer, AccountType accountType, Integer score){
+    public void changeAccountTypeAndScore(Long id, AccountType accountType, Integer score){
         CustomerUpdateRequestDto customerUpdateRequestDto = CustomerUpdateRequestDto.builder()
-                .customer(customer)
                 .accountType(accountType)
                 .score(score)
                 .build();
-        customerClient.changeAccountTypeAndScore(customerUpdateRequestDto);
+        customerClient.changeAccountTypeAndScore(id, customerUpdateRequestDto);
     }
 
 }

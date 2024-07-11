@@ -71,7 +71,7 @@ public class CustomerServiceTest {
     @Test
     public void testChangeAccountTypeAndScore() {
         when(customerRepository.save(Mockito.any(Customer.class))).thenReturn(Instancio.create(Customer.class));
-        customerService.changeAccountTypeAndScore(prepareCustomerUpdateRequestDto());
+        customerService.changeAccountTypeAndScore(Mockito.any(), prepareCustomerUpdateRequestDto());
         verify(customerRepository, times(1)).save(Mockito.any(Customer.class));
     }
 
@@ -103,7 +103,6 @@ public class CustomerServiceTest {
 
     private CustomerUpdateRequestDto prepareCustomerUpdateRequestDto(){
         CustomerUpdateRequestDto customerUpdateRequestDto = new CustomerUpdateRequestDto();
-        customerUpdateRequestDto.setCustomer(prepareCustomer());
         customerUpdateRequestDto.setAccountType(AccountType.STANDARD);
         customerUpdateRequestDto.setScore(0);
         return customerUpdateRequestDto;
