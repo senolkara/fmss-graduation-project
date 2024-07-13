@@ -1,6 +1,7 @@
 package com.senolkarakurt.orderservice.service.impl;
 
 import com.senolkarakurt.dto.request.OrderRequestDto;
+import com.senolkarakurt.dto.request.SystemLogSaveRequestDto;
 import com.senolkarakurt.dto.response.*;
 import com.senolkarakurt.enums.AccountType;
 import com.senolkarakurt.enums.OrderStatus;
@@ -16,9 +17,10 @@ import com.senolkarakurt.orderservice.model.CPackage;
 import com.senolkarakurt.orderservice.repository.OrderRepository;
 import com.senolkarakurt.orderservice.repository.specification.OrderSpecification;
 import com.senolkarakurt.orderservice.service.OrderService;
+import com.senolkarakurt.orderservice.service.SystemLogService;
 import com.senolkarakurt.util.GenerateRandomUnique;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -34,7 +36,6 @@ import java.util.Optional;
 import java.util.Set;
 
 @Service
-@RequiredArgsConstructor
 @Slf4j
 public class OrderServiceImpl implements OrderService {
 
@@ -44,6 +45,23 @@ public class OrderServiceImpl implements OrderService {
     private final PackageClientService packageClientService;
     private final PurchaseClientService purchaseClientService;
     private final ExceptionMessagesResource exceptionMessagesResource;
+    private final SystemLogService systemLogService;
+
+    public OrderServiceImpl(OrderRepository orderRepository,
+                            CustomerClientService customerClientService,
+                            UserClientService userClientService,
+                            PackageClientService packageClientService,
+                            PurchaseClientService purchaseClientService,
+                            ExceptionMessagesResource exceptionMessagesResource,
+                            @Qualifier("textFileLogService") SystemLogService systemLogService) {
+        this.orderRepository = orderRepository;
+        this.customerClientService = customerClientService;
+        this.userClientService = userClientService;
+        this.packageClientService = packageClientService;
+        this.purchaseClientService = purchaseClientService;
+        this.exceptionMessagesResource = exceptionMessagesResource;
+        this.systemLogService = systemLogService;
+    }
 
     @Override
     public void save(OrderRequestDto orderRequestDto) {
@@ -77,10 +95,22 @@ public class OrderServiceImpl implements OrderService {
         Optional<Order> orderOptional = orderRepository.findById(id);
         if (orderOptional.isEmpty()){
             log.error("%s : {} %s".formatted(exceptionMessagesResource.getOrderNotFoundWithId(), id));
+            SystemLogSaveRequestDto systemLogSaveRequestDto = SystemLogSaveRequestDto.builder()
+                    .userId(null)
+                    .recordDateTime(LocalDateTime.now())
+                    .content("%s : {} %s".formatted(exceptionMessagesResource.getOrderNotFoundWithId(), id))
+                    .build();
+            systemLogService.save(systemLogSaveRequestDto);
             throw new CommonException(exceptionMessagesResource.getOrderNotFoundWithId());
         }
         if (!orderOptional.get().getRecordStatus().equals(RecordStatus.ACTIVE)){
             log.error("%s : {} %s".formatted(exceptionMessagesResource.getOrderNotFoundWithId(), id));
+            SystemLogSaveRequestDto systemLogSaveRequestDto = SystemLogSaveRequestDto.builder()
+                    .userId(null)
+                    .recordDateTime(LocalDateTime.now())
+                    .content("%s : {} %s".formatted(exceptionMessagesResource.getOrderNotFoundWithId(), id))
+                    .build();
+            systemLogService.save(systemLogSaveRequestDto);
             throw new CommonException(exceptionMessagesResource.getOrderNotFoundWithId());
         }
         return orderOptional.orElse(null);

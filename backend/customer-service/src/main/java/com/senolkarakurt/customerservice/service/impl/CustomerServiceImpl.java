@@ -10,7 +10,9 @@ import com.senolkarakurt.customerservice.dto.request.CustomerUpdateRequestDto;
 import com.senolkarakurt.customerservice.model.User;
 import com.senolkarakurt.customerservice.producer.NotificationCustomerProducer;
 import com.senolkarakurt.customerservice.producer.dto.NotificationCustomerDto;
+import com.senolkarakurt.customerservice.service.SystemLogService;
 import com.senolkarakurt.dto.request.CustomerRequestDto;
+import com.senolkarakurt.dto.request.SystemLogSaveRequestDto;
 import com.senolkarakurt.dto.response.AddressResponseDto;
 import com.senolkarakurt.customerservice.exception.ExceptionMessagesResource;
 import com.senolkarakurt.customerservice.model.Customer;
@@ -19,14 +21,14 @@ import com.senolkarakurt.customerservice.service.CustomerService;
 import com.senolkarakurt.dto.response.UserResponseDto;
 import com.senolkarakurt.enums.NotificationType;
 import com.senolkarakurt.exception.CommonException;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
-@RequiredArgsConstructor
 @Slf4j
 public class CustomerServiceImpl implements CustomerService {
 
@@ -35,6 +37,21 @@ public class CustomerServiceImpl implements CustomerService {
     private final AuthenticationClientService authenticationClientService;
     private final ExceptionMessagesResource exceptionMessagesResource;
     private final NotificationCustomerProducer notificationCustomerProducer;
+    private final SystemLogService systemLogService;
+
+    public CustomerServiceImpl(CustomerRepository customerRepository,
+                               UserClientService userClientService,
+                               AuthenticationClientService authenticationClientService,
+                               ExceptionMessagesResource exceptionMessagesResource,
+                               NotificationCustomerProducer notificationCustomerProducer,
+                               @Qualifier("dbLogService") SystemLogService systemLogService) {
+        this.customerRepository = customerRepository;
+        this.userClientService = userClientService;
+        this.authenticationClientService = authenticationClientService;
+        this.exceptionMessagesResource = exceptionMessagesResource;
+        this.notificationCustomerProducer = notificationCustomerProducer;
+        this.systemLogService = systemLogService;
+    }
 
     @Override
     public void save(CustomerRequestDto customerRequestDto) {
@@ -61,6 +78,12 @@ public class CustomerServiceImpl implements CustomerService {
         Optional<Customer> customerOptional = customerRepository.findById(id);
         if (customerOptional.isEmpty()){
             log.error("%s : {} %s".formatted(exceptionMessagesResource.getCustomerNotFoundWithId(), id));
+            SystemLogSaveRequestDto systemLogSaveRequestDto = SystemLogSaveRequestDto.builder()
+                    .userId(null)
+                    .recordDateTime(LocalDateTime.now())
+                    .content("%s : {} %s".formatted(exceptionMessagesResource.getCustomerNotFoundWithId(), id))
+                    .build();
+            systemLogService.save(systemLogSaveRequestDto);
             throw new CommonException(exceptionMessagesResource.getCustomerNotFoundWithId());
         }
         return customerOptional.orElse(null);
@@ -71,6 +94,12 @@ public class CustomerServiceImpl implements CustomerService {
         Optional<Customer> customerOptional = customerRepository.findById(id);
         if (customerOptional.isEmpty()){
             log.error("%s : {} %s".formatted(exceptionMessagesResource.getCustomerNotFoundWithId(), id));
+            SystemLogSaveRequestDto systemLogSaveRequestDto = SystemLogSaveRequestDto.builder()
+                    .userId(null)
+                    .recordDateTime(LocalDateTime.now())
+                    .content("%s : {} %s".formatted(exceptionMessagesResource.getCustomerNotFoundWithId(), id))
+                    .build();
+            systemLogService.save(systemLogSaveRequestDto);
             throw new CommonException(exceptionMessagesResource.getCustomerNotFoundWithId());
         }
         Customer customer = customerOptional.get();

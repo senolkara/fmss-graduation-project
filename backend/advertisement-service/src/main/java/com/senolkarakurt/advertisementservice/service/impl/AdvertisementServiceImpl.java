@@ -150,7 +150,8 @@ public class AdvertisementServiceImpl implements AdvertisementService {
             throw new CommonException(exceptionMessagesResource.getAdvertisementNotFoundWithId());
         }
         Advertisement advertisement = advertisementOptional.get();
-        advertisementRepository.delete(advertisement);
+        advertisement.setAdvertisementStatus(AdvertisementStatus.PASSIVE);
+        advertisementRepository.save(advertisement);
     }
 
     private void controlAdvertisementPackage(CustomerPackage customerPackage){

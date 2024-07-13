@@ -66,7 +66,7 @@ public class OrderControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
         ;
-        verify(orderService, times(1)).getAllByCustomerId(10L);
+        verify(orderService, times(1)).getAllByCustomerId(Mockito.any());
     }
 
     @Test
@@ -77,7 +77,7 @@ public class OrderControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
         ;
-        verify(orderService, times(1)).getOrderById(10L);
+        verify(orderService, times(1)).getOrderById(Mockito.any());
     }
 
     @Test

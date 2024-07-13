@@ -1,6 +1,7 @@
 package com.senolkarakurt.userservice.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.senolkarakurt.dto.request.SystemLogSaveRequestDto;
 import com.senolkarakurt.dto.request.UserRequestDto;
 import com.senolkarakurt.dto.response.AddressResponseDto;
 import com.senolkarakurt.dto.response.UserResponseDto;
@@ -17,13 +18,14 @@ import com.senolkarakurt.userservice.model.User;
 import com.senolkarakurt.userservice.repository.AddressRepository;
 import com.senolkarakurt.userservice.repository.UserRepository;
 import com.senolkarakurt.userservice.service.AuthenticationService;
+import com.senolkarakurt.userservice.service.SystemLogService;
 import com.senolkarakurt.userservice.token.Token;
 import com.senolkarakurt.userservice.token.TokenRepository;
 import com.senolkarakurt.userservice.token.TokenType;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -32,13 +34,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
 @Service
-@RequiredArgsConstructor
 @Slf4j
 public class AuthenticationServiceImpl implements AuthenticationService {
 
@@ -49,17 +51,48 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final ExceptionMessagesResource exceptionMessagesResource;
+    private final SystemLogService systemLogService;
+
+    public AuthenticationServiceImpl(UserRepository userRepository,
+                                     AddressRepository addressRepository,
+                                     TokenRepository tokenRepository,
+                                     PasswordEncoder passwordEncoder,
+                                     JwtService jwtService,
+                                     AuthenticationManager authenticationManager,
+                                     ExceptionMessagesResource exceptionMessagesResource,
+                                     @Qualifier("textFileLogService") SystemLogService systemLogService) {
+        this.userRepository = userRepository;
+        this.addressRepository = addressRepository;
+        this.tokenRepository = tokenRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.jwtService = jwtService;
+        this.authenticationManager = authenticationManager;
+        this.exceptionMessagesResource = exceptionMessagesResource;
+        this.systemLogService = systemLogService;
+    }
 
     @Override
     public User register(UserRequestDto userRequestDto) {
         Optional<User> userOptional = userRepository.findByEmail(userRequestDto.getEmail());
         if (userOptional.isPresent()){
             log.error("%s : {} %s".formatted(exceptionMessagesResource.getEmailAlreadyExist(), userRequestDto.getEmail()));
+            SystemLogSaveRequestDto systemLogSaveRequestDto = SystemLogSaveRequestDto.builder()
+                    .userId(null)
+                    .recordDateTime(LocalDateTime.now())
+                    .content("%s : {} %s".formatted(exceptionMessagesResource.getEmailAlreadyExist(), userRequestDto.getEmail()))
+                    .build();
+            systemLogService.save(systemLogSaveRequestDto);
             throw new CommonException(exceptionMessagesResource.getEmailAlreadyExist());
         }
         Optional<User> userPhoneNumberOptional = userRepository.findByPhoneNumber(userRequestDto.getPhoneNumber());
         if (userPhoneNumberOptional.isPresent()){
             log.error("%s : {} %s".formatted(exceptionMessagesResource.getPhoneNumberAlreadyExist(), userRequestDto.getEmail()));
+            SystemLogSaveRequestDto systemLogSaveRequestDto = SystemLogSaveRequestDto.builder()
+                    .userId(null)
+                    .recordDateTime(LocalDateTime.now())
+                    .content("%s : {} %s".formatted(exceptionMessagesResource.getPhoneNumberAlreadyExist(), userRequestDto.getEmail()))
+                    .build();
+            systemLogService.save(systemLogSaveRequestDto);
             throw new CommonException(exceptionMessagesResource.getPhoneNumberAlreadyExist());
         }
         User user = UserConverter.toUserByUserRequestDto(userRequestDto);
@@ -78,11 +111,23 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         Optional<User> userOptional = userRepository.findByEmail(authenticationRequestDto.getEmail());
         if (userOptional.isEmpty()){
             log.error("%s : {}".formatted(exceptionMessagesResource.getUserNotFoundWithThisEmail()));
+            SystemLogSaveRequestDto systemLogSaveRequestDto = SystemLogSaveRequestDto.builder()
+                    .userId(null)
+                    .recordDateTime(LocalDateTime.now())
+                    .content("%s : {}".formatted(exceptionMessagesResource.getUserNotFoundWithThisEmail()))
+                    .build();
+            systemLogService.save(systemLogSaveRequestDto);
             throw new CommonException(exceptionMessagesResource.getUserNotFoundWithThisEmail());
         }
         User user = userOptional.get();
         if (!user.getRecordStatus().equals(RecordStatus.ACTIVE)){
             log.error("%s : {}".formatted(exceptionMessagesResource.getThisUserIsInActive()));
+            SystemLogSaveRequestDto systemLogSaveRequestDto = SystemLogSaveRequestDto.builder()
+                    .userId(null)
+                    .recordDateTime(LocalDateTime.now())
+                    .content("%s : {}".formatted(exceptionMessagesResource.getThisUserIsInActive()))
+                    .build();
+            systemLogService.save(systemLogSaveRequestDto);
             throw new CommonException(exceptionMessagesResource.getThisUserIsInActive());
         }
         Authentication authenticate = authenticationManager.authenticate(
@@ -93,6 +138,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         );
         if (!authenticate.isAuthenticated()){
             log.error("%s : {}".formatted(exceptionMessagesResource.getLoginFailed()));
+            SystemLogSaveRequestDto systemLogSaveRequestDto = SystemLogSaveRequestDto.builder()
+                    .userId(null)
+                    .recordDateTime(LocalDateTime.now())
+                    .content("%s : {}".formatted(exceptionMessagesResource.getLoginFailed()))
+                    .build();
+            systemLogService.save(systemLogSaveRequestDto);
             throw new CommonException(exceptionMessagesResource.getLoginFailed());
         }
         String jwtToken = jwtService.generateToken(user);
