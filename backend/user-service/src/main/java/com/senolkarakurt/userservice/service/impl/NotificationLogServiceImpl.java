@@ -7,7 +7,6 @@ import com.senolkarakurt.userservice.producer.dto.NotificationSystemLogDto;
 import com.senolkarakurt.userservice.repository.UserRepository;
 import com.senolkarakurt.userservice.service.SystemLogService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -22,14 +21,7 @@ public class NotificationLogServiceImpl implements SystemLogService {
 
     @Override
     public void save(SystemLogSaveRequestDto systemLogSaveRequestDto) {
-        User user = null;
-        Optional<User> userOptional = userRepository.findById(systemLogSaveRequestDto.getUserId());
-        if (userOptional.isPresent()){
-            user = userOptional.get();
-        }
-        Long userId = user != null ? user.getId() : null;
         NotificationSystemLogDto notificationSystemLogDto = NotificationSystemLogDto.builder()
-                .userId(userId)
                 .recordDateTime(LocalDateTime.now())
                 .content(systemLogSaveRequestDto.getContent())
                 .build();

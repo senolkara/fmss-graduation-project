@@ -3,7 +3,7 @@ package com.senolkarakurt.userservice.controller;
 import com.senolkarakurt.dto.request.UserRequestDto;
 import com.senolkarakurt.dto.response.UserResponseDto;
 import com.senolkarakurt.userservice.dto.request.AuthenticationRequestDto;
-import com.senolkarakurt.userservice.model.User;
+import com.senolkarakurt.userservice.dto.response.RegistrationResponseDto;
 import com.senolkarakurt.userservice.service.AuthenticationService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -23,7 +23,7 @@ public class AuthenticationController {
     private final AuthenticationService authenticationService;
 
     @PostMapping("/register")
-    public User register(@RequestBody UserRequestDto userRequestDto) {
+    public RegistrationResponseDto register(@RequestBody UserRequestDto userRequestDto) {
         return authenticationService.register(userRequestDto);
     }
     @PostMapping("/authenticate")

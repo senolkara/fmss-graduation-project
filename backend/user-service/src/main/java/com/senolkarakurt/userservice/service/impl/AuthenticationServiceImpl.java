@@ -12,6 +12,7 @@ import com.senolkarakurt.userservice.converter.AddressConverter;
 import com.senolkarakurt.userservice.converter.UserConverter;
 import com.senolkarakurt.userservice.dto.request.AuthenticationRequestDto;
 import com.senolkarakurt.userservice.dto.response.AuthenticationResponseDto;
+import com.senolkarakurt.userservice.dto.response.RegistrationResponseDto;
 import com.senolkarakurt.userservice.exception.ExceptionMessagesResource;
 import com.senolkarakurt.userservice.model.Address;
 import com.senolkarakurt.userservice.model.User;
@@ -72,27 +73,17 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public User register(UserRequestDto userRequestDto) {
+    public RegistrationResponseDto register(UserRequestDto userRequestDto) {
         Optional<User> userOptional = userRepository.findByEmail(userRequestDto.getEmail());
         if (userOptional.isPresent()){
             log.error("%s : {} %s".formatted(exceptionMessagesResource.getEmailAlreadyExist(), userRequestDto.getEmail()));
-            SystemLogSaveRequestDto systemLogSaveRequestDto = SystemLogSaveRequestDto.builder()
-                    .userId(null)
-                    .recordDateTime(LocalDateTime.now())
-                    .content("%s : {} %s".formatted(exceptionMessagesResource.getEmailAlreadyExist(), userRequestDto.getEmail()))
-                    .build();
-            systemLogService.save(systemLogSaveRequestDto);
+            saveSystemLog("%s : {} %s".formatted(exceptionMessagesResource.getEmailAlreadyExist(), userRequestDto.getEmail()));
             throw new CommonException(exceptionMessagesResource.getEmailAlreadyExist());
         }
         Optional<User> userPhoneNumberOptional = userRepository.findByPhoneNumber(userRequestDto.getPhoneNumber());
         if (userPhoneNumberOptional.isPresent()){
             log.error("%s : {} %s".formatted(exceptionMessagesResource.getPhoneNumberAlreadyExist(), userRequestDto.getEmail()));
-            SystemLogSaveRequestDto systemLogSaveRequestDto = SystemLogSaveRequestDto.builder()
-                    .userId(null)
-                    .recordDateTime(LocalDateTime.now())
-                    .content("%s : {} %s".formatted(exceptionMessagesResource.getPhoneNumberAlreadyExist(), userRequestDto.getEmail()))
-                    .build();
-            systemLogService.save(systemLogSaveRequestDto);
+            saveSystemLog("%s : {} %s".formatted(exceptionMessagesResource.getPhoneNumberAlreadyExist(), userRequestDto.getEmail()));
             throw new CommonException(exceptionMessagesResource.getPhoneNumberAlreadyExist());
         }
         User user = UserConverter.toUserByUserRequestDto(userRequestDto);
@@ -103,7 +94,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         String jwtToken = jwtService.generateToken(user);
         jwtService.generateRefreshToken(user);
         saveUserToken(user, jwtToken);
-        return user;
+        return RegistrationResponseDto.builder()
+                .user(user)
+                .addresses(addressSet)
+                .build();
     }
 
     @Override
@@ -111,23 +105,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         Optional<User> userOptional = userRepository.findByEmail(authenticationRequestDto.getEmail());
         if (userOptional.isEmpty()){
             log.error("%s : {}".formatted(exceptionMessagesResource.getUserNotFoundWithThisEmail()));
-            SystemLogSaveRequestDto systemLogSaveRequestDto = SystemLogSaveRequestDto.builder()
-                    .userId(null)
-                    .recordDateTime(LocalDateTime.now())
-                    .content("%s : {}".formatted(exceptionMessagesResource.getUserNotFoundWithThisEmail()))
-                    .build();
-            systemLogService.save(systemLogSaveRequestDto);
+            saveSystemLog("%s : {}".formatted(exceptionMessagesResource.getUserNotFoundWithThisEmail()));
             throw new CommonException(exceptionMessagesResource.getUserNotFoundWithThisEmail());
         }
         User user = userOptional.get();
         if (!user.getRecordStatus().equals(RecordStatus.ACTIVE)){
             log.error("%s : {}".formatted(exceptionMessagesResource.getThisUserIsInActive()));
-            SystemLogSaveRequestDto systemLogSaveRequestDto = SystemLogSaveRequestDto.builder()
-                    .userId(null)
-                    .recordDateTime(LocalDateTime.now())
-                    .content("%s : {}".formatted(exceptionMessagesResource.getThisUserIsInActive()))
-                    .build();
-            systemLogService.save(systemLogSaveRequestDto);
+            saveSystemLog("%s : {}".formatted(exceptionMessagesResource.getThisUserIsInActive()));
             throw new CommonException(exceptionMessagesResource.getThisUserIsInActive());
         }
         Authentication authenticate = authenticationManager.authenticate(
@@ -138,12 +122,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         );
         if (!authenticate.isAuthenticated()){
             log.error("%s : {}".formatted(exceptionMessagesResource.getLoginFailed()));
-            SystemLogSaveRequestDto systemLogSaveRequestDto = SystemLogSaveRequestDto.builder()
-                    .userId(null)
-                    .recordDateTime(LocalDateTime.now())
-                    .content("%s : {}".formatted(exceptionMessagesResource.getLoginFailed()))
-                    .build();
-            systemLogService.save(systemLogSaveRequestDto);
+            saveSystemLog("%s : {}".formatted(exceptionMessagesResource.getLoginFailed()));
             throw new CommonException(exceptionMessagesResource.getLoginFailed());
         }
         String jwtToken = jwtService.generateToken(user);
@@ -206,5 +185,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 new ObjectMapper().writeValue(response.getOutputStream(), authenticationResponseDto);
             }
         }
+    }
+
+    private void saveSystemLog(String content){
+        SystemLogSaveRequestDto systemLogSaveRequestDto = SystemLogSaveRequestDto.builder()
+                .recordDateTime(LocalDateTime.now())
+                .content(content)
+                .build();
+        systemLogService.save(systemLogSaveRequestDto);
     }
 }

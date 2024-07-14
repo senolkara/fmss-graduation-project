@@ -32,14 +32,9 @@ public class CustomerClientService {
 
     public Customer getCustomerById(Long id) {
         Customer customer = customerClient.getCustomerById(id);
-        if (customer == null) {
+        if (customer.getId() == null) {
             log.error("%s : {} %s".formatted(exceptionMessagesResource.getCustomerNotFound(), id));
-            SystemLogSaveRequestDto systemLogSaveRequestDto = SystemLogSaveRequestDto.builder()
-                    .userId(null)
-                    .recordDateTime(LocalDateTime.now())
-                    .content("%s : {} %s".formatted(exceptionMessagesResource.getCustomerNotFound(), id))
-                    .build();
-            systemLogService.save(systemLogSaveRequestDto);
+            saveSystemLog("%s : {} %s".formatted(exceptionMessagesResource.getCustomerNotFound(), id));
             throw new CommonException(exceptionMessagesResource.getCustomerNotFound());
         }
         return customer;
@@ -51,6 +46,14 @@ public class CustomerClientService {
                 .score(score)
                 .build();
         customerClient.changeAccountTypeAndScore(id, customerUpdateRequestDto);
+    }
+
+    private void saveSystemLog(String content){
+        SystemLogSaveRequestDto systemLogSaveRequestDto = SystemLogSaveRequestDto.builder()
+                .recordDateTime(LocalDateTime.now())
+                .content(content)
+                .build();
+        systemLogService.save(systemLogSaveRequestDto);
     }
 
 }

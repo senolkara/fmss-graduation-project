@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -24,6 +25,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
     private final TokenRepository tokenRepository;
+    private final List<String> apiEndpoints = List.of(
+            "/api/v1/auth",
+            "/api/v1/users/id",
+            "/api/v1/users/addresses/userId"
+    );
 
     @Override
     protected void doFilterInternal(
@@ -31,8 +37,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             @NonNull HttpServletResponse response,
             @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
-        if (request.getServletPath().contains("/api/v1/auth") ||
-                request.getServletPath().contains("/api/v1/users")) {
+        if (apiEndpoints.stream().anyMatch(s -> request.getServletPath().contains(s))) {
             filterChain.doFilter(request, response);
             return;
         }

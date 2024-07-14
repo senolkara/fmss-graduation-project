@@ -3,6 +3,7 @@ package com.senolkarakurt.customerservice.service;
 import com.senolkarakurt.customerservice.client.service.AuthenticationClientService;
 import com.senolkarakurt.customerservice.client.service.UserClientService;
 import com.senolkarakurt.customerservice.dto.request.CustomerUpdateRequestDto;
+import com.senolkarakurt.customerservice.dto.response.RegistrationResponseDto;
 import com.senolkarakurt.customerservice.model.Customer;
 import com.senolkarakurt.customerservice.model.User;
 import com.senolkarakurt.customerservice.repository.CustomerRepository;
@@ -44,7 +45,7 @@ public class CustomerServiceTest {
     @Test
     public void testCreateCustomer() {
         when(userClientService.getAddressesByUserId(Mockito.any())).thenReturn(new HashSet<>());
-        when(authenticationClientService.register(Mockito.any())).thenReturn(prepareUser());
+        when(authenticationClientService.register(Mockito.any())).thenReturn(prepareRegistrationResponseDto());
         when(customerRepository.save(Mockito.any(Customer.class))).thenReturn(Instancio.create(Customer.class));
         customerService.save(prepareCustomerRequestDto());
         verify(customerRepository, times(1)).save(Mockito.any(Customer.class));
@@ -86,6 +87,13 @@ public class CustomerServiceTest {
         UserRequestDto userRequestDto = new UserRequestDto();
         userRequestDto.setId(1L);
         return userRequestDto;
+    }
+
+    private RegistrationResponseDto prepareRegistrationResponseDto(){
+        RegistrationResponseDto registrationResponseDto = new RegistrationResponseDto();
+        registrationResponseDto.setUser(prepareUser());
+        registrationResponseDto.setAddresses(new HashSet<>());
+        return registrationResponseDto;
     }
 
     private Customer prepareCustomer(){

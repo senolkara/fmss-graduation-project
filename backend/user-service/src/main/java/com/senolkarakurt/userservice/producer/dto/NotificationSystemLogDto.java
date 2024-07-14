@@ -15,7 +15,6 @@ import java.time.LocalDateTime;
 @Setter
 @Builder
 public class NotificationSystemLogDto {
-    private Long userId;
 
     @JsonProperty("recordDateTime")
     @JsonSerialize(using = LocalDateTimeSerializer.class)

@@ -17,7 +17,6 @@ public class SystemLogNotification {
 
     @Id
     private String id;
-    private Long userId;
     private LocalDateTime recordDateTime;
     private String content;
 }

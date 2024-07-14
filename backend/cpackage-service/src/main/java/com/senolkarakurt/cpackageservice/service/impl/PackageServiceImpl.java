@@ -1,7 +1,9 @@
 package com.senolkarakurt.cpackageservice.service.impl;
 
 import com.senolkarakurt.cpackageservice.model.CPackage;
+import com.senolkarakurt.cpackageservice.service.SystemLogService;
 import com.senolkarakurt.dto.request.CustomerPackageRequestDto;
+import com.senolkarakurt.dto.request.SystemLogSaveRequestDto;
 import com.senolkarakurt.dto.response.*;
 import com.senolkarakurt.enums.RecordStatus;
 import com.senolkarakurt.exception.CommonException;
@@ -16,8 +18,8 @@ import com.senolkarakurt.cpackageservice.model.*;
 import com.senolkarakurt.cpackageservice.repository.CustomerPackageRepository;
 import com.senolkarakurt.cpackageservice.repository.PackageRepository;
 import com.senolkarakurt.cpackageservice.service.PackageService;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -28,7 +30,6 @@ import java.util.Optional;
 import java.util.Set;
 
 @Service
-@RequiredArgsConstructor
 @Slf4j
 public class PackageServiceImpl implements PackageService {
 
@@ -37,6 +38,21 @@ public class PackageServiceImpl implements PackageService {
     private final ExceptionMessagesResource exceptionMessagesResource;
     private final UserClientService userClientService;
     private final CustomerClientService customerClientService;
+    private final SystemLogService systemLogService;
+
+    public PackageServiceImpl(PackageRepository packageRepository,
+                              CustomerPackageRepository customerPackageRepository,
+                              ExceptionMessagesResource exceptionMessagesResource,
+                              UserClientService userClientService,
+                              CustomerClientService customerClientService,
+                              @Qualifier("textFileLogService") SystemLogService systemLogService) {
+        this.packageRepository = packageRepository;
+        this.customerPackageRepository = customerPackageRepository;
+        this.exceptionMessagesResource = exceptionMessagesResource;
+        this.userClientService = userClientService;
+        this.customerClientService = customerClientService;
+        this.systemLogService = systemLogService;
+    }
 
     @Override
     public void save(CustomerPackageRequestDto customerPackageRequestDto) {
@@ -90,6 +106,7 @@ public class PackageServiceImpl implements PackageService {
         Optional<CustomerPackage> customerPackageOptional = customerPackageRepository.findByIdAndRecordStatus(id, RecordStatus.ACTIVE);
         if (customerPackageOptional.isEmpty()){
             log.error("%s : {} %s".formatted(exceptionMessagesResource.getPackageNotFoundWithId(), id));
+            saveSystemLog("%s : {} %s".formatted(exceptionMessagesResource.getPackageNotFoundWithId(), id));
             throw new CommonException(exceptionMessagesResource.getPackageNotFoundWithId());
         }
         return customerPackageOptional.orElse(null);
@@ -100,6 +117,7 @@ public class PackageServiceImpl implements PackageService {
         Optional<CustomerPackage> customerPackageOptional = customerPackageRepository.findByIdAndFinishDateTimeGreaterThanAndRecordStatus(id, LocalDateTime.now(), RecordStatus.ACTIVE);
         if (customerPackageOptional.isEmpty()){
             log.error("%s : {} %s".formatted(exceptionMessagesResource.getPackageNotFoundWithId(), id));
+            saveSystemLog("%s : {} %s".formatted(exceptionMessagesResource.getPackageNotFoundWithId(), id));
             throw new CommonException(exceptionMessagesResource.getPackageNotFoundWithId());
         }
         CustomerPackage customerPackage = customerPackageOptional.get();
@@ -107,6 +125,14 @@ public class PackageServiceImpl implements PackageService {
             customerPackage.setAdvertisementCount(advertisementCount);
             customerPackageRepository.save(customerPackage);
         }
+    }
+
+    private void saveSystemLog(String content){
+        SystemLogSaveRequestDto systemLogSaveRequestDto = SystemLogSaveRequestDto.builder()
+                .recordDateTime(LocalDateTime.now())
+                .content(content)
+                .build();
+        systemLogService.save(systemLogSaveRequestDto);
     }
 
     private CustomerPackageResponseDto getCustomerPackageResponseDto(CustomerPackage customerPackage){

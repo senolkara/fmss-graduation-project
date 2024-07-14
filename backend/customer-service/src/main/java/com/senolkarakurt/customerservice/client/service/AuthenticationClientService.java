@@ -1,6 +1,7 @@
 package com.senolkarakurt.customerservice.client.service;
 
 import com.senolkarakurt.customerservice.client.AuthenticationClient;
+import com.senolkarakurt.customerservice.dto.response.RegistrationResponseDto;
 import com.senolkarakurt.customerservice.exception.ExceptionMessagesResource;
 import com.senolkarakurt.customerservice.model.User;
 import com.senolkarakurt.customerservice.service.SystemLogService;
@@ -29,18 +30,21 @@ public class AuthenticationClientService {
         this.systemLogService = systemLogService;
     }
 
-    public User register(UserRequestDto userRequestDto) {
-        User user = authenticationClient.register(userRequestDto);
-        if (user.getId() == null) {
+    public RegistrationResponseDto register(UserRequestDto userRequestDto) {
+        RegistrationResponseDto registrationResponseDto = authenticationClient.register(userRequestDto);
+        if (registrationResponseDto.getUser().getId() == null) {
             log.error("%s : {}".formatted(exceptionMessagesResource.getCustomerNotCreated()));
-            SystemLogSaveRequestDto systemLogSaveRequestDto = SystemLogSaveRequestDto.builder()
-                    .userId(null)
-                    .recordDateTime(LocalDateTime.now())
-                    .content("%s : {}".formatted(exceptionMessagesResource.getCustomerNotCreated()))
-                    .build();
-            systemLogService.save(systemLogSaveRequestDto);
+            saveSystemLog("%s : {}".formatted(exceptionMessagesResource.getCustomerNotCreated()));
             throw new CommonException(exceptionMessagesResource.getCustomerNotCreated());
         }
-        return user;
+        return registrationResponseDto;
+    }
+
+    private void saveSystemLog(String content){
+        SystemLogSaveRequestDto systemLogSaveRequestDto = SystemLogSaveRequestDto.builder()
+                .recordDateTime(LocalDateTime.now())
+                .content(content)
+                .build();
+        systemLogService.save(systemLogSaveRequestDto);
     }
 }

@@ -18,7 +18,6 @@ public class SystemLogNotificationServiceImpl implements SystemLogNotificationSe
     @Override
     public void save(NotificationSystemLogDto notificationSystemLogDto) {
         SystemLogNotification systemLogNotification = SystemLogNotification.builder()
-                .userId(notificationSystemLogDto.getUserId())
                 .recordDateTime(notificationSystemLogDto.getRecordDateTime())
                 .content(notificationSystemLogDto.getContent())
                 .build();

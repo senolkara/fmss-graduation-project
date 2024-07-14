@@ -1,6 +1,6 @@
 package com.senolkarakurt.customerservice.client;
 
-import com.senolkarakurt.customerservice.model.User;
+import com.senolkarakurt.customerservice.dto.response.RegistrationResponseDto;
 import com.senolkarakurt.dto.request.UserRequestDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 public interface AuthenticationClient {
 
     @PostMapping("/register")
-    User register(UserRequestDto userRequestDto);
+    RegistrationResponseDto register(UserRequestDto userRequestDto);
 
 }

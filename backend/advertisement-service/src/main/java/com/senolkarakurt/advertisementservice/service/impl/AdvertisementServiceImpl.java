@@ -13,14 +13,16 @@ import com.senolkarakurt.advertisementservice.producer.dto.NotificationAdvertise
 import com.senolkarakurt.advertisementservice.repository.AdvertisementRepository;
 import com.senolkarakurt.advertisementservice.repository.BuildingRepository;
 import com.senolkarakurt.advertisementservice.service.AdvertisementService;
+import com.senolkarakurt.advertisementservice.service.SystemLogService;
 import com.senolkarakurt.dto.request.AdvertisementRequestDto;
+import com.senolkarakurt.dto.request.SystemLogSaveRequestDto;
 import com.senolkarakurt.dto.response.*;
 import com.senolkarakurt.enums.AdvertisementStatus;
 import com.senolkarakurt.enums.NotificationType;
 import com.senolkarakurt.enums.RecordStatus;
 import com.senolkarakurt.exception.CommonException;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -31,7 +33,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 @Slf4j
 public class AdvertisementServiceImpl implements AdvertisementService {
 
@@ -42,12 +43,35 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     private final CustomerClientService customerClientService;
     private final PackageClientService packageClientService;
     private final NotificationAdvertisementProducer notificationAdvertisementProducer;
+    private final SystemLogService systemLogService;
+
+    public AdvertisementServiceImpl(BuildingRepository buildingRepository,
+                                    AdvertisementRepository advertisementRepository,
+                                    ExceptionMessagesResource exceptionMessagesResource,
+                                    UserClientService userClientService,
+                                    CustomerClientService customerClientService,
+                                    PackageClientService packageClientService,
+                                    NotificationAdvertisementProducer notificationAdvertisementProducer,
+                                    @Qualifier("textFileLogService") SystemLogService systemLogService) {
+        this.buildingRepository = buildingRepository;
+        this.advertisementRepository = advertisementRepository;
+        this.exceptionMessagesResource = exceptionMessagesResource;
+        this.userClientService = userClientService;
+        this.customerClientService = customerClientService;
+        this.packageClientService = packageClientService;
+        this.notificationAdvertisementProducer = notificationAdvertisementProducer;
+        this.systemLogService = systemLogService;
+    }
 
     @Override
     public void save(AdvertisementRequestDto advertisementRequestDto) {
+        log.info("advertisement save start");
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("advertisement save start\n");
         CustomerPackage customerPackage = packageClientService.getCustomerPackageById(advertisementRequestDto.getCustomerPackageRequestDto().getId());
         if (customerPackage.getId() == null){
             log.error("%s : {} %s".formatted(exceptionMessagesResource.getPackageNotFoundWithId(), advertisementRequestDto.getCustomerPackageRequestDto().getId()));
+            saveSystemLog("%s : {} %s".formatted(exceptionMessagesResource.getPackageNotFoundWithId(), advertisementRequestDto.getCustomerPackageRequestDto().getId()));
             throw new CommonException(exceptionMessagesResource.getPackageNotFoundWithId());
         }
         controlAdvertisementPackage(customerPackage);
@@ -64,6 +88,8 @@ public class AdvertisementServiceImpl implements AdvertisementService {
                 .advertisementResponseDto(getAdvertisementResponseDto(advertisement))
                 .build();
         notificationAdvertisementProducer.sendNotificationAdvertisement(notificationAdvertisementDto);
+        stringBuilder.append("advertisement save finish\n");
+        saveSystemLog(stringBuilder.toString());
     }
 
     @Override
@@ -98,6 +124,7 @@ public class AdvertisementServiceImpl implements AdvertisementService {
         Optional<Advertisement> advertisementOptional = advertisementRepository.findById(id);
         if (advertisementOptional.isEmpty()){
             log.error("%s : {} %s".formatted(exceptionMessagesResource.getAdvertisementNotFoundWithId(), id));
+            saveSystemLog("%s : {} %s".formatted(exceptionMessagesResource.getAdvertisementNotFoundWithId(), id));
             throw new CommonException(exceptionMessagesResource.getAdvertisementNotFoundWithId());
         }
         return advertisementOptional.orElse(null);
@@ -113,6 +140,7 @@ public class AdvertisementServiceImpl implements AdvertisementService {
         if (building == null ||
                 !building.getRecordStatus().equals(RecordStatus.ACTIVE)){
             log.error("%s : {}".formatted(exceptionMessagesResource.getBuildingNotFound()));
+            saveSystemLog("%s : {}".formatted(exceptionMessagesResource.getBuildingNotFound()));
             throw new CommonException(exceptionMessagesResource.getBuildingNotFound());
         }
     }
@@ -122,6 +150,7 @@ public class AdvertisementServiceImpl implements AdvertisementService {
         Optional<Advertisement> advertisementOptional = advertisementRepository.findById(id);
         if (advertisementOptional.isEmpty()){
             log.error("%s : {} %s".formatted(exceptionMessagesResource.getAdvertisementNotFoundWithId(), id));
+            saveSystemLog("%s : {} %s".formatted(exceptionMessagesResource.getAdvertisementNotFoundWithId(), id));
             throw new CommonException(exceptionMessagesResource.getAdvertisementNotFoundWithId());
         }
         Advertisement advertisement = advertisementOptional.get();
@@ -131,36 +160,58 @@ public class AdvertisementServiceImpl implements AdvertisementService {
 
     @Override
     public void update(Long id, AdvertisementUpdateRequestDto advertisementUpdateRequestDto) {
+        log.info("advertisement update start");
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("advertisement update start\n");
         Optional<Advertisement> advertisementOptional = advertisementRepository.findById(id);
         if (advertisementOptional.isEmpty()){
             log.error("%s : {} %s".formatted(exceptionMessagesResource.getAdvertisementNotFoundWithId(), id));
+            saveSystemLog("%s : {} %s".formatted(exceptionMessagesResource.getAdvertisementNotFoundWithId(), id));
             throw new CommonException(exceptionMessagesResource.getAdvertisementNotFoundWithId());
         }
         Advertisement advertisement = advertisementOptional.get();
         advertisement.setAdvertisementType(advertisementUpdateRequestDto.getAdvertisementType());
         advertisement.setPrice(advertisementUpdateRequestDto.getPrice());
         advertisementRepository.save(advertisement);
+        stringBuilder.append("advertisement update finish\n");
+        saveSystemLog(stringBuilder.toString());
     }
 
     @Override
     public void delete(Long id) {
+        log.info("advertisement delete start");
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("advertisement delete start\n");
         Optional<Advertisement> advertisementOptional = advertisementRepository.findById(id);
         if (advertisementOptional.isEmpty()){
             log.error("%s : {} %s".formatted(exceptionMessagesResource.getAdvertisementNotFoundWithId(), id));
+            saveSystemLog("%s : {} %s".formatted(exceptionMessagesResource.getAdvertisementNotFoundWithId(), id));
             throw new CommonException(exceptionMessagesResource.getAdvertisementNotFoundWithId());
         }
         Advertisement advertisement = advertisementOptional.get();
         advertisement.setAdvertisementStatus(AdvertisementStatus.PASSIVE);
         advertisementRepository.save(advertisement);
+        stringBuilder.append("advertisement delete finish\n");
+        saveSystemLog(stringBuilder.toString());
+    }
+
+    private void saveSystemLog(String content){
+        SystemLogSaveRequestDto systemLogSaveRequestDto = SystemLogSaveRequestDto.builder()
+                .recordDateTime(LocalDateTime.now())
+                .content(content)
+                .build();
+        systemLogService.save(systemLogSaveRequestDto);
     }
 
     private void controlAdvertisementPackage(CustomerPackage customerPackage){
         if (customerPackage.getAdvertisementCount() < 0){
             log.error("%s : {} %s".formatted(exceptionMessagesResource.getPackageAdvertisementCountZero(), customerPackage.getId()));
+            saveSystemLog("%s : {} %s".formatted(exceptionMessagesResource.getPackageAdvertisementCountZero(), customerPackage.getId()));
             throw new CommonException(exceptionMessagesResource.getPackageAdvertisementCountZero());
         }
         if (customerPackage.getFinishDateTime().isBefore(LocalDateTime.now())){
             log.error("%s : {} %s".formatted(exceptionMessagesResource.getPackageValidDateTimeFinish(), customerPackage.getId()));
+            saveSystemLog("%s : {} %s".formatted(exceptionMessagesResource.getPackageValidDateTimeFinish(), customerPackage.getId()));
             throw new CommonException(exceptionMessagesResource.getPackageValidDateTimeFinish());
         }
     }

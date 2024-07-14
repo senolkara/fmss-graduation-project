@@ -34,12 +34,7 @@ public class UserClientService {
         User user = userClient.getUserById(id);
         if (user.getId() == null) {
             log.error("%s : {}".formatted(exceptionMessagesResource.getCustomerNotFound()));
-            SystemLogSaveRequestDto systemLogSaveRequestDto = SystemLogSaveRequestDto.builder()
-                    .userId(null)
-                    .recordDateTime(LocalDateTime.now())
-                    .content("%s : {}".formatted(exceptionMessagesResource.getCustomerNotFound()))
-                    .build();
-            systemLogService.save(systemLogSaveRequestDto);
+            saveSystemLog("%s : {}".formatted(exceptionMessagesResource.getCustomerNotFound()));
             throw new CommonException(exceptionMessagesResource.getCustomerNotFound());
         }
         return user;
@@ -49,4 +44,11 @@ public class UserClientService {
         return userClient.getAddressesByUserId(userId);
     }
 
+    private void saveSystemLog(String content){
+        SystemLogSaveRequestDto systemLogSaveRequestDto = SystemLogSaveRequestDto.builder()
+                .recordDateTime(LocalDateTime.now())
+                .content(content)
+                .build();
+        systemLogService.save(systemLogSaveRequestDto);
+    }
 }

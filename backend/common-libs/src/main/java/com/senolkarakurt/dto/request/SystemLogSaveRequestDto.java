@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 public class SystemLogSaveRequestDto {
-    private Long userId;
     private LocalDateTime recordDateTime;
     private String content;
 }

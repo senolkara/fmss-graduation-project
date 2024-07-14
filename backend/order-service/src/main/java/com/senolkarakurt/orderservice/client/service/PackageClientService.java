@@ -30,17 +30,20 @@ public class PackageClientService {
 
     public CPackage getPackageById(Long id) {
         CPackage aCPackage = packageClient.getPackageById(id);
-        if (aCPackage == null) {
+        if (aCPackage.getId() == null) {
             log.error("%s : {} %s".formatted(exceptionMessagesResource.getPackageNotFound(), id));
-            SystemLogSaveRequestDto systemLogSaveRequestDto = SystemLogSaveRequestDto.builder()
-                    .userId(null)
-                    .recordDateTime(LocalDateTime.now())
-                    .content("%s : {} %s".formatted(exceptionMessagesResource.getPackageNotFound(), id))
-                    .build();
-            systemLogService.save(systemLogSaveRequestDto);
+            saveSystemLog("%s : {} %s".formatted(exceptionMessagesResource.getPackageNotFound(), id));
             throw new CommonException(exceptionMessagesResource.getPackageNotFound());
         }
         return aCPackage;
+    }
+
+    private void saveSystemLog(String content){
+        SystemLogSaveRequestDto systemLogSaveRequestDto = SystemLogSaveRequestDto.builder()
+                .recordDateTime(LocalDateTime.now())
+                .content(content)
+                .build();
+        systemLogService.save(systemLogSaveRequestDto);
     }
 
 }

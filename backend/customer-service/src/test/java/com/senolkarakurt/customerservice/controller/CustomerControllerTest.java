@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.senolkarakurt.customerservice.client.service.AuthenticationClientService;
 import com.senolkarakurt.customerservice.client.service.UserClientService;
 import com.senolkarakurt.customerservice.dto.request.CustomerUpdateRequestDto;
+import com.senolkarakurt.customerservice.dto.response.RegistrationResponseDto;
 import com.senolkarakurt.customerservice.model.Customer;
 import com.senolkarakurt.customerservice.model.User;
 import com.senolkarakurt.customerservice.service.impl.CustomerServiceImpl;
@@ -49,7 +50,7 @@ public class CustomerControllerTest {
     @Test
     public void testCreateCustomer() throws Exception {
         when(userClientService.getAddressesByUserId(Mockito.any())).thenReturn(new HashSet<>());
-        when(authenticationClientService.register(Mockito.any())).thenReturn(prepareUser());
+        when(authenticationClientService.register(Mockito.any())).thenReturn(prepareRegistrationResponseDto());
         ObjectMapper objectMapper = new ObjectMapper();
         String body = objectMapper.writeValueAsString(prepareUserRequestDto());
 
@@ -91,6 +92,13 @@ public class CustomerControllerTest {
         UserRequestDto userRequestDto = new UserRequestDto();
         userRequestDto.setId(1L);
         return userRequestDto;
+    }
+
+    private RegistrationResponseDto prepareRegistrationResponseDto(){
+        RegistrationResponseDto registrationResponseDto = new RegistrationResponseDto();
+        registrationResponseDto.setUser(prepareUser());
+        registrationResponseDto.setAddresses(new HashSet<>());
+        return registrationResponseDto;
     }
 
     private Customer prepareCustomer(){

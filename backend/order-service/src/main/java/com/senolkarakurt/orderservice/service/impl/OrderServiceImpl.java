@@ -95,22 +95,12 @@ public class OrderServiceImpl implements OrderService {
         Optional<Order> orderOptional = orderRepository.findById(id);
         if (orderOptional.isEmpty()){
             log.error("%s : {} %s".formatted(exceptionMessagesResource.getOrderNotFoundWithId(), id));
-            SystemLogSaveRequestDto systemLogSaveRequestDto = SystemLogSaveRequestDto.builder()
-                    .userId(null)
-                    .recordDateTime(LocalDateTime.now())
-                    .content("%s : {} %s".formatted(exceptionMessagesResource.getOrderNotFoundWithId(), id))
-                    .build();
-            systemLogService.save(systemLogSaveRequestDto);
+            saveSystemLog("%s : {} %s".formatted(exceptionMessagesResource.getOrderNotFoundWithId(), id));
             throw new CommonException(exceptionMessagesResource.getOrderNotFoundWithId());
         }
         if (!orderOptional.get().getRecordStatus().equals(RecordStatus.ACTIVE)){
             log.error("%s : {} %s".formatted(exceptionMessagesResource.getOrderNotFoundWithId(), id));
-            SystemLogSaveRequestDto systemLogSaveRequestDto = SystemLogSaveRequestDto.builder()
-                    .userId(null)
-                    .recordDateTime(LocalDateTime.now())
-                    .content("%s : {} %s".formatted(exceptionMessagesResource.getOrderNotFoundWithId(), id))
-                    .build();
-            systemLogService.save(systemLogSaveRequestDto);
+            saveSystemLog("%s : {} %s".formatted(exceptionMessagesResource.getOrderNotFoundWithId(), id));
             throw new CommonException(exceptionMessagesResource.getOrderNotFoundWithId());
         }
         return orderOptional.orElse(null);
@@ -144,6 +134,14 @@ public class OrderServiceImpl implements OrderService {
             });
         }
         return orderResponseDtoList;
+    }
+
+    private void saveSystemLog(String content) {
+        SystemLogSaveRequestDto systemLogSaveRequestDto = SystemLogSaveRequestDto.builder()
+                .recordDateTime(LocalDateTime.now())
+                .content(content)
+                .build();
+        systemLogService.save(systemLogSaveRequestDto);
     }
 
     private void changeCustomerAccountTypeByOrder(Order order){

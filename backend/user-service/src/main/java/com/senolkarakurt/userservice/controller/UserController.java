@@ -20,7 +20,7 @@ public class UserController {
         return userService.getUserById(id);
     }
 
-    @GetMapping("/userId/{userId}")
+    @GetMapping("/addresses/userId/{userId}")
     public Set<Address> getAddressesByUserId(@PathVariable("userId") Long userId){
         return userService.getAddressesByUserId(userId);
     }

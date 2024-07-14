@@ -14,7 +14,7 @@ public interface UserClient {
     @GetMapping("/id/{id}")
     User getUserById(@PathVariable("id") Long id);
 
-    @GetMapping("/userId/{userId}")
+    @GetMapping("/addresses/userId/{userId}")
     Set<Address> getAddressesByUserId(@PathVariable("userId") Long userId);
 
 }
