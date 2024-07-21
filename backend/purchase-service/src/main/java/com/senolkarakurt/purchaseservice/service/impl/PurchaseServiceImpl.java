@@ -27,8 +27,10 @@ import com.senolkarakurt.util.GenerateRandomUnique;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -71,12 +73,22 @@ public class PurchaseServiceImpl implements PurchaseService {
 
     @Override
     public Purchase getPurchaseById(Long id) {
-        Optional<Purchase> purchaseOptional = purchaseRepository.findByIdAndAndRecordStatus(id, RecordStatus.ACTIVE);
+        Optional<Purchase> purchaseOptional = purchaseRepository.findByIdAndRecordStatus(id, RecordStatus.ACTIVE);
         if (purchaseOptional.isEmpty()){
             log.error("%s : {} %s".formatted(exceptionMessagesResource.getPurchaseNotFoundWithId(), id));
             throw new CommonException(exceptionMessagesResource.getPurchaseNotFoundWithId());
         }
         return purchaseOptional.orElse(null);
+    }
+
+    @Override
+    public Purchase getPurchaseByOrderId(Long orderId) {
+        List<Purchase> purchaseList = purchaseRepository.findByOrderIdAndRecordStatus(orderId, RecordStatus.ACTIVE);
+        if (CollectionUtils.isEmpty(purchaseList)){
+            log.error("%s : {}".formatted(exceptionMessagesResource.getPurchaseNotFound()));
+            throw new CommonException(exceptionMessagesResource.getPurchaseNotFound());
+        }
+        return purchaseList.getFirst();
     }
 
     private CustomerPackageRequestDto getCustomerPackageRequestDto(Purchase purchase){

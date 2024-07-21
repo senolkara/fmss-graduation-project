@@ -45,7 +45,7 @@ public class PackageServiceImpl implements PackageService {
                               ExceptionMessagesResource exceptionMessagesResource,
                               UserClientService userClientService,
                               CustomerClientService customerClientService,
-                              @Qualifier("textFileLogService") SystemLogService systemLogService) {
+                              @Qualifier("dbLogService") SystemLogService systemLogService) {
         this.packageRepository = packageRepository;
         this.customerPackageRepository = customerPackageRepository;
         this.exceptionMessagesResource = exceptionMessagesResource;
@@ -81,6 +81,7 @@ public class PackageServiceImpl implements PackageService {
             customerPackage.setStartDateTime(startDateTime);
             customerPackage.setFinishDateTime(finishDateTime);
             customerPackage.setAdvertisementCount(advertisementCount);
+            customerPackage.setPackageId(customerPackageRequestDto.getPackageRequestDto().getId());
         }
         customerPackageRepository.save(customerPackage);
     }
@@ -98,6 +99,11 @@ public class PackageServiceImpl implements PackageService {
     @Override
     public CPackage getPackageById(Long id) {
         Optional<CPackage> packageOptional = packageRepository.findById(id);
+        if (packageOptional.isEmpty()){
+            log.error("%s : {} %s".formatted(exceptionMessagesResource.getPackageNotFoundWithId(), id));
+            saveSystemLog("%s : {} %s".formatted(exceptionMessagesResource.getPackageNotFoundWithId(), id));
+            throw new CommonException(exceptionMessagesResource.getPackageNotFoundWithId());
+        }
         return packageOptional.orElse(null);
     }
 
@@ -125,6 +131,11 @@ public class PackageServiceImpl implements PackageService {
             customerPackage.setAdvertisementCount(advertisementCount);
             customerPackageRepository.save(customerPackage);
         }
+    }
+
+    @Override
+    public List<CPackage> getAllPackages() {
+        return packageRepository.findAll();
     }
 
     private void saveSystemLog(String content){

@@ -1,6 +1,7 @@
 package com.senolkarakurt.userservice.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.senolkarakurt.dto.response.UserResponseDto;
 import com.senolkarakurt.userservice.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,5 +19,6 @@ public class AuthenticationResponseDto {
   @JsonProperty("refresh_token")
   private String refreshToken;
 
+  private UserResponseDto userResponseDto;
   private User user;
 }

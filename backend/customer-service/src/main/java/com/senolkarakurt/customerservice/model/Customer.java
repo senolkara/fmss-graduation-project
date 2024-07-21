@@ -26,7 +26,7 @@ public class Customer implements Serializable {
     @Column(name = "record_status", nullable = false)
     private RecordStatus recordStatus;
 
-    @Column(name = "user_id", nullable = false)
+    @Column(name = "user_id", nullable = false, unique = true)
     private Long userId;
 
     @Enumerated(EnumType.STRING)

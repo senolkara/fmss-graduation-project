@@ -53,7 +53,7 @@ public class OrderServiceImpl implements OrderService {
                             PackageClientService packageClientService,
                             PurchaseClientService purchaseClientService,
                             ExceptionMessagesResource exceptionMessagesResource,
-                            @Qualifier("textFileLogService") SystemLogService systemLogService) {
+                            @Qualifier("dbLogService") SystemLogService systemLogService) {
         this.orderRepository = orderRepository;
         this.customerClientService = customerClientService;
         this.userClientService = userClientService;

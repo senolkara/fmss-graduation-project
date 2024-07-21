@@ -6,7 +6,9 @@ import lombok.Getter;
 public enum PackageType {
 
     STANDARD(0),
-    PREMIUM(1);
+    PREMIUM(1),
+    GOLD(2),
+    PLATINUM(3);
 
     private final Integer value;
 

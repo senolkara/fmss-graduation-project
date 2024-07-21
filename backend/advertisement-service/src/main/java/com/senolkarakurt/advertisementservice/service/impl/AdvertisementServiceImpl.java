@@ -52,7 +52,7 @@ public class AdvertisementServiceImpl implements AdvertisementService {
                                     CustomerClientService customerClientService,
                                     PackageClientService packageClientService,
                                     NotificationAdvertisementProducer notificationAdvertisementProducer,
-                                    @Qualifier("textFileLogService") SystemLogService systemLogService) {
+                                    @Qualifier("dbLogService") SystemLogService systemLogService) {
         this.buildingRepository = buildingRepository;
         this.advertisementRepository = advertisementRepository;
         this.exceptionMessagesResource = exceptionMessagesResource;
@@ -170,8 +170,12 @@ public class AdvertisementServiceImpl implements AdvertisementService {
             throw new CommonException(exceptionMessagesResource.getAdvertisementNotFoundWithId());
         }
         Advertisement advertisement = advertisementOptional.get();
+        advertisement.setAdvertisementStatus(advertisementUpdateRequestDto.getAdvertisementStatus());
         advertisement.setAdvertisementType(advertisementUpdateRequestDto.getAdvertisementType());
         advertisement.setPrice(advertisementUpdateRequestDto.getPrice());
+        Building building = getBuildingById(advertisementUpdateRequestDto.getBuildingId());
+        controlBuilding(building);
+        advertisement.setBuildingId(building.getId());
         advertisementRepository.save(advertisement);
         stringBuilder.append("advertisement update finish\n");
         saveSystemLog(stringBuilder.toString());
@@ -193,6 +197,28 @@ public class AdvertisementServiceImpl implements AdvertisementService {
         advertisementRepository.save(advertisement);
         stringBuilder.append("advertisement delete finish\n");
         saveSystemLog(stringBuilder.toString());
+    }
+
+    @Override
+    public List<BuildingResponseDto> getAllBuildings() {
+        List<BuildingResponseDto> buildingResponseDtoList = new ArrayList<>();
+        for (Building building:buildingRepository.findAll()){
+            BuildingResponseDto buildingResponseDto = BuildingConverter.toBuildingResponseDtoByBuilding(building);
+            if (building instanceof House house){
+                HouseResponseDto houseResponseDto = HouseConverter.toHouseResponseDtoByHouse(house);
+                buildingResponseDto.setHouseResponseDto(houseResponseDto);
+            }
+            if (building instanceof SummerHouse summerHouse){
+                SummerHouseResponseDto summerHouseResponseDto = SummerHouseConverter.toSummerHouseResponseDtoBySummerHouse(summerHouse);
+                buildingResponseDto.setSummerHouseResponseDto(summerHouseResponseDto);
+            }
+            if (building instanceof Villa villa){
+                VillaResponseDto villaResponseDto = VillaConverter.toVillaResponseDtoByVilla(villa);
+                buildingResponseDto.setVillaResponseDto(villaResponseDto);
+            }
+            buildingResponseDtoList.add(buildingResponseDto);
+        }
+        return buildingResponseDtoList;
     }
 
     private void saveSystemLog(String content){

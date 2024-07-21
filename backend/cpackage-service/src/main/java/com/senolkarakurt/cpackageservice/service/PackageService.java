@@ -13,4 +13,5 @@ public interface PackageService {
     CPackage getPackageById(Long id);
     CustomerPackage getCustomerPackageById(Long id);
     void changeCustomerPackageAdvertisementCount(Long id, Integer advertisementCount);
+    List<CPackage> getAllPackages();
 }

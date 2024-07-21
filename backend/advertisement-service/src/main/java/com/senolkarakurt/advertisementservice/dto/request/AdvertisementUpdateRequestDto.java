@@ -17,4 +17,5 @@ public class AdvertisementUpdateRequestDto {
     private AdvertisementStatus advertisementStatus;
     private AdvertisementType advertisementType;
     private BigDecimal price;
+    private Long buildingId;
 }

@@ -9,6 +9,7 @@ import com.senolkarakurt.customerservice.model.Customer;
 import com.senolkarakurt.customerservice.model.User;
 import com.senolkarakurt.customerservice.service.impl.CustomerServiceImpl;
 import com.senolkarakurt.dto.request.CustomerRequestDto;
+import com.senolkarakurt.dto.request.RegistrationRequestDto;
 import com.senolkarakurt.dto.request.UserRequestDto;
 import com.senolkarakurt.enums.AccountType;
 import org.junit.jupiter.api.Test;
@@ -60,7 +61,7 @@ public class CustomerControllerTest {
                 ;
 
         resultActions.andExpect(status().isOk());
-        verify(customerService, times(1)).save(Mockito.any(CustomerRequestDto.class));
+        verify(customerService, times(1)).save(Mockito.any(RegistrationRequestDto.class));
     }
 
     @Test
@@ -97,7 +98,6 @@ public class CustomerControllerTest {
     private RegistrationResponseDto prepareRegistrationResponseDto(){
         RegistrationResponseDto registrationResponseDto = new RegistrationResponseDto();
         registrationResponseDto.setUser(prepareUser());
-        registrationResponseDto.setAddresses(new HashSet<>());
         return registrationResponseDto;
     }
 

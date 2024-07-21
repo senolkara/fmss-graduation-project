@@ -9,9 +9,11 @@ import com.senolkarakurt.customerservice.model.User;
 import com.senolkarakurt.customerservice.repository.CustomerRepository;
 import com.senolkarakurt.customerservice.service.impl.CustomerServiceImpl;
 import com.senolkarakurt.dto.request.CustomerRequestDto;
+import com.senolkarakurt.dto.request.RegistrationRequestDto;
 import com.senolkarakurt.dto.request.UserRequestDto;
 import com.senolkarakurt.enums.AccountType;
 import com.senolkarakurt.exception.CommonException;
+import com.senolkarakurt.util.GenerateRandomUnique;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -47,7 +49,7 @@ public class CustomerServiceTest {
         when(userClientService.getAddressesByUserId(Mockito.any())).thenReturn(new HashSet<>());
         when(authenticationClientService.register(Mockito.any())).thenReturn(prepareRegistrationResponseDto());
         when(customerRepository.save(Mockito.any(Customer.class))).thenReturn(Instancio.create(Customer.class));
-        customerService.save(prepareCustomerRequestDto());
+        customerService.save(prepareRegistrationRequestDto());
         verify(customerRepository, times(1)).save(Mockito.any(Customer.class));
     }
 
@@ -83,6 +85,14 @@ public class CustomerServiceTest {
         return customerRequestDto;
     }
 
+    private RegistrationRequestDto prepareRegistrationRequestDto(){
+        RegistrationRequestDto registrationRequestDto = new RegistrationRequestDto();
+        registrationRequestDto.setName("name");
+        registrationRequestDto.setEmail("name@name.com");
+        registrationRequestDto.setPassword(GenerateRandomUnique.createRandomHash("123456"));
+        return registrationRequestDto;
+    }
+
     private UserRequestDto prepareUserRequestDto(){
         UserRequestDto userRequestDto = new UserRequestDto();
         userRequestDto.setId(1L);
@@ -92,7 +102,6 @@ public class CustomerServiceTest {
     private RegistrationResponseDto prepareRegistrationResponseDto(){
         RegistrationResponseDto registrationResponseDto = new RegistrationResponseDto();
         registrationResponseDto.setUser(prepareUser());
-        registrationResponseDto.setAddresses(new HashSet<>());
         return registrationResponseDto;
     }
 

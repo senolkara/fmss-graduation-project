@@ -5,6 +5,7 @@ import com.senolkarakurt.advertisementservice.model.Advertisement;
 import com.senolkarakurt.advertisementservice.service.AdvertisementService;
 import com.senolkarakurt.dto.request.AdvertisementRequestDto;
 import com.senolkarakurt.dto.response.AdvertisementResponseDto;
+import com.senolkarakurt.dto.response.BuildingResponseDto;
 import com.senolkarakurt.dto.response.GenericResponse;
 import com.senolkarakurt.enums.AdvertisementStatus;
 import com.senolkarakurt.exception.ExceptionSuccessCreatedMessage;
@@ -18,6 +19,7 @@ import java.util.List;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api/v1/advertisements")
+@CrossOrigin(origins = "http://localhost:3000")
 public class AdvertisementController {
 
     private final AdvertisementService advertisementService;
@@ -59,6 +61,11 @@ public class AdvertisementController {
     @PutMapping("/changeAdvertisementStatus/{id}")
     public void changeAdvertisementStatus(@PathVariable("id") Long id, @RequestBody AdvertisementStatus advertisementStatus){
         advertisementService.changeAdvertisementStatus(id, advertisementStatus);
+    }
+
+    @GetMapping("/allBuildings")
+    public GenericResponse<List<BuildingResponseDto>> getAllBuildings() {
+        return GenericResponse.success(advertisementService.getAllBuildings());
     }
 
 }

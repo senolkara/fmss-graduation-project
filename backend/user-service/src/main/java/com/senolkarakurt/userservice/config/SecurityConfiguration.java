@@ -1,5 +1,6 @@
 package com.senolkarakurt.userservice.config;
 
+import com.senolkarakurt.enums.RoleType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,9 +27,10 @@ public class SecurityConfiguration {
     private final LogoutHandler logoutHandler;
 
     private static final String[] WHITE_LIST_URL = {
-            "/api/v1/auth/**",
-            "/api/v1/users/id/**",
-            "/api/v1/users/addresses/userId/**"
+            "/api/v**/auth/**",
+            "/api/v**/users/id/**",
+            "/api/v**/users/addresses/userId/**",
+            "/api/v**/users/addressList/userId/**"
     };
 
     @Bean
@@ -45,7 +47,7 @@ public class SecurityConfiguration {
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .logout(logout ->
-                        logout.logoutUrl("/api/v1/auth/logout")
+                        logout.logoutUrl("/api/v**/auth/logout")
                                 .addLogoutHandler(logoutHandler)
                                 .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext())
                 )

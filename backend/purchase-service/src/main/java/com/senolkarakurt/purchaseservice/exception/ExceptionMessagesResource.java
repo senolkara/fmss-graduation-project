@@ -48,4 +48,7 @@ public class ExceptionMessagesResource {
     @Value("${PURCHASE_NOT_FOUND_WITH_ID}")
     public String purchaseNotFoundWithId;
 
+    @Value("${PURCHASE_NOT_FOUND}")
+    public String purchaseNotFound;
+
 }

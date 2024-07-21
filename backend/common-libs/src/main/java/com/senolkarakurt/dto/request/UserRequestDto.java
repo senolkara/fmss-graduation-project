@@ -20,11 +20,9 @@ public class UserRequestDto {
 
     private Long id;
 
-    @NotEmpty(message = "ad alanını doldurunuz!")
     @Size(min = 2, max = 255)
     private String name;
 
-    @NotEmpty(message = "soyad alanını doldurunuz!")
     @Size(min = 2, max = 255)
     private String surname;
 

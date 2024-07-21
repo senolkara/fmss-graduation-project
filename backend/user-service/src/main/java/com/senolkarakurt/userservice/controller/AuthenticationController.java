@@ -1,33 +1,31 @@
 package com.senolkarakurt.userservice.controller;
 
-import com.senolkarakurt.dto.request.UserRequestDto;
-import com.senolkarakurt.dto.response.UserResponseDto;
+import com.senolkarakurt.dto.request.RegistrationRequestDto;
 import com.senolkarakurt.userservice.dto.request.AuthenticationRequestDto;
+import com.senolkarakurt.userservice.dto.response.AuthenticationResponseDto;
 import com.senolkarakurt.userservice.dto.response.RegistrationResponseDto;
 import com.senolkarakurt.userservice.service.AuthenticationService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
 @RestController
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:3000")
 public class AuthenticationController {
 
     private final AuthenticationService authenticationService;
 
     @PostMapping("/register")
-    public RegistrationResponseDto register(@RequestBody UserRequestDto userRequestDto) {
-        return authenticationService.register(userRequestDto);
+    public RegistrationResponseDto register(@RequestBody RegistrationRequestDto registrationRequestDto) {
+        return authenticationService.register(registrationRequestDto);
     }
     @PostMapping("/authenticate")
-    public UserResponseDto authenticate(@RequestBody AuthenticationRequestDto authenticationRequestDto) {
+    public AuthenticationResponseDto authenticate(@RequestBody AuthenticationRequestDto authenticationRequestDto) {
         return authenticationService.authenticate(authenticationRequestDto);
     }
 

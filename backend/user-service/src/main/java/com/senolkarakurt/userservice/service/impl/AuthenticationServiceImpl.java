@@ -1,8 +1,8 @@
 package com.senolkarakurt.userservice.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.senolkarakurt.dto.request.RegistrationRequestDto;
 import com.senolkarakurt.dto.request.SystemLogSaveRequestDto;
-import com.senolkarakurt.dto.request.UserRequestDto;
 import com.senolkarakurt.dto.response.AddressResponseDto;
 import com.senolkarakurt.dto.response.UserResponseDto;
 import com.senolkarakurt.enums.RecordStatus;
@@ -36,10 +36,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -61,7 +58,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                                      JwtService jwtService,
                                      AuthenticationManager authenticationManager,
                                      ExceptionMessagesResource exceptionMessagesResource,
-                                     @Qualifier("textFileLogService") SystemLogService systemLogService) {
+                                     @Qualifier("dbLogService") SystemLogService systemLogService) {
         this.userRepository = userRepository;
         this.addressRepository = addressRepository;
         this.tokenRepository = tokenRepository;
@@ -73,35 +70,26 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public RegistrationResponseDto register(UserRequestDto userRequestDto) {
-        Optional<User> userOptional = userRepository.findByEmail(userRequestDto.getEmail());
+    public RegistrationResponseDto register(RegistrationRequestDto registrationRequestDto) {
+        Optional<User> userOptional = userRepository.findByEmail(registrationRequestDto.getEmail());
         if (userOptional.isPresent()){
-            log.error("%s : {} %s".formatted(exceptionMessagesResource.getEmailAlreadyExist(), userRequestDto.getEmail()));
-            saveSystemLog("%s : {} %s".formatted(exceptionMessagesResource.getEmailAlreadyExist(), userRequestDto.getEmail()));
+            log.error("%s : {} %s".formatted(exceptionMessagesResource.getEmailAlreadyExist(), registrationRequestDto.getEmail()));
+            saveSystemLog("%s : {} %s".formatted(exceptionMessagesResource.getEmailAlreadyExist(), registrationRequestDto.getEmail()));
             throw new CommonException(exceptionMessagesResource.getEmailAlreadyExist());
         }
-        Optional<User> userPhoneNumberOptional = userRepository.findByPhoneNumber(userRequestDto.getPhoneNumber());
-        if (userPhoneNumberOptional.isPresent()){
-            log.error("%s : {} %s".formatted(exceptionMessagesResource.getPhoneNumberAlreadyExist(), userRequestDto.getEmail()));
-            saveSystemLog("%s : {} %s".formatted(exceptionMessagesResource.getPhoneNumberAlreadyExist(), userRequestDto.getEmail()));
-            throw new CommonException(exceptionMessagesResource.getPhoneNumberAlreadyExist());
-        }
-        User user = UserConverter.toUserByUserRequestDto(userRequestDto);
-        user.setPassword(passwordEncoder.encode(userRequestDto.getPassword()));
+        User user = UserConverter.toUserByRegistrationRequestDto(registrationRequestDto);
+        user.setPassword(passwordEncoder.encode(registrationRequestDto.getPassword()));
         userRepository.save(user);
-        Set<Address> addressSet = AddressConverter.toSetAddressBySetAddressRequestDto(userRequestDto.getAddressRequestDtoSet(), user);
-        addressRepository.saveAll(addressSet);
         String jwtToken = jwtService.generateToken(user);
         jwtService.generateRefreshToken(user);
         saveUserToken(user, jwtToken);
         return RegistrationResponseDto.builder()
                 .user(user)
-                .addresses(addressSet)
                 .build();
     }
 
     @Override
-    public UserResponseDto authenticate(AuthenticationRequestDto authenticationRequestDto) {
+    public AuthenticationResponseDto authenticate(AuthenticationRequestDto authenticationRequestDto) {
         Optional<User> userOptional = userRepository.findByEmail(authenticationRequestDto.getEmail());
         if (userOptional.isEmpty()){
             log.error("%s : {}".formatted(exceptionMessagesResource.getUserNotFoundWithThisEmail()));
@@ -126,14 +114,19 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             throw new CommonException(exceptionMessagesResource.getLoginFailed());
         }
         String jwtToken = jwtService.generateToken(user);
-        jwtService.generateRefreshToken(user);
+        String refreshToken = jwtService.generateRefreshToken(user);
         revokeAllUserTokens(user);
         saveUserToken(user, jwtToken);
         UserResponseDto userResponseDto = UserConverter.toUserResponseDtoByUser(user);
-        Set<Address> addresses = new HashSet<>(addressRepository.findAddressesByUserIdAndRecordStatus(user.getId(), RecordStatus.ACTIVE));
+        Set<Address> addresses = new HashSet<>(addressRepository.findByUserIdAndRecordStatus(user.getId(), RecordStatus.ACTIVE));
         Set<AddressResponseDto> addressResponseDtoSet = AddressConverter.toSetAddressesResponseDtoBySetAddresses(addresses);
         userResponseDto.setAddressResponseDtoSet(addressResponseDtoSet);
-        return userResponseDto;
+        return AuthenticationResponseDto.builder()
+                .accessToken(jwtToken)
+                .refreshToken(refreshToken)
+                .userResponseDto(userResponseDto)
+                .user(user)
+                .build();
     }
 
     @Override
@@ -177,9 +170,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 String accessToken = jwtService.generateToken(user);
                 revokeAllUserTokens(user);
                 saveUserToken(user, accessToken);
+                UserResponseDto userResponseDto = UserConverter.toUserResponseDtoByUser(user);
+                Set<Address> addresses = new HashSet<>(addressRepository.findByUserIdAndRecordStatus(user.getId(), RecordStatus.ACTIVE));
+                Set<AddressResponseDto> addressResponseDtoSet = AddressConverter.toSetAddressesResponseDtoBySetAddresses(addresses);
+                userResponseDto.setAddressResponseDtoSet(addressResponseDtoSet);
                 AuthenticationResponseDto authenticationResponseDto = AuthenticationResponseDto.builder()
                         .accessToken(accessToken)
                         .refreshToken(refreshToken)
+                        .userResponseDto(userResponseDto)
                         .user(user)
                         .build();
                 new ObjectMapper().writeValue(response.getOutputStream(), authenticationResponseDto);

@@ -16,6 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api/v1/packages")
+@CrossOrigin(origins = "http://localhost:3000")
 public class PackageController {
 
     private final PackageService packageService;
@@ -36,6 +37,11 @@ public class PackageController {
     @GetMapping("/id/{id}")
     public CPackage getPackageById(@PathVariable("id") Long id) {
         return packageService.getPackageById(id);
+    }
+
+    @GetMapping("/allPackages")
+    public GenericResponse<List<CPackage>> getAllPackages() {
+        return GenericResponse.success(packageService.getAllPackages());
     }
 
     @GetMapping("/customerPackageId/{id}")

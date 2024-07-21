@@ -3,10 +3,9 @@ package com.senolkarakurt.customerservice.client.service;
 import com.senolkarakurt.customerservice.client.AuthenticationClient;
 import com.senolkarakurt.customerservice.dto.response.RegistrationResponseDto;
 import com.senolkarakurt.customerservice.exception.ExceptionMessagesResource;
-import com.senolkarakurt.customerservice.model.User;
 import com.senolkarakurt.customerservice.service.SystemLogService;
+import com.senolkarakurt.dto.request.RegistrationRequestDto;
 import com.senolkarakurt.dto.request.SystemLogSaveRequestDto;
-import com.senolkarakurt.dto.request.UserRequestDto;
 import com.senolkarakurt.exception.CommonException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -30,9 +29,10 @@ public class AuthenticationClientService {
         this.systemLogService = systemLogService;
     }
 
-    public RegistrationResponseDto register(UserRequestDto userRequestDto) {
-        RegistrationResponseDto registrationResponseDto = authenticationClient.register(userRequestDto);
-        if (registrationResponseDto.getUser().getId() == null) {
+    public RegistrationResponseDto register(RegistrationRequestDto registrationRequestDto) {
+        RegistrationResponseDto registrationResponseDto = authenticationClient.register(registrationRequestDto);
+        if (registrationResponseDto.getUser() == null ||
+                registrationResponseDto.getUser().getId() == null) {
             log.error("%s : {}".formatted(exceptionMessagesResource.getCustomerNotCreated()));
             saveSystemLog("%s : {}".formatted(exceptionMessagesResource.getCustomerNotCreated()));
             throw new CommonException(exceptionMessagesResource.getCustomerNotCreated());

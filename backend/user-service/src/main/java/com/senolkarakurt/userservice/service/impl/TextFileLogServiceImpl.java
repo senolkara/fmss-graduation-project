@@ -30,7 +30,6 @@ public class TextFileLogServiceImpl implements SystemLogService {
             fileOutputStream = new FileOutputStream(file);
             byte[] array = systemLogSaveRequestDto.getContent().getBytes();
             fileOutputStream.write(array);
-            fileOutputStream.flush();
             fileOutputStream.close();
         }
         catch (IOException e) {

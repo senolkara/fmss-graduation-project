@@ -1,5 +1,10 @@
 package com.senolkarakurt.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.senolkarakurt.constants.CommonConstants;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,7 +19,12 @@ import java.time.LocalDateTime;
 public class GenericResponse<T> {
 
     private String message;
-    private LocalDateTime date;
+
+    @JsonProperty("dateTime")
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    private LocalDateTime dateTime;
+
     private HttpStatus httpStatus;
     private T data;
     private T error;
@@ -24,7 +34,7 @@ public class GenericResponse<T> {
                 .httpStatus(HttpStatus.BAD_REQUEST)
                 .message(message)
                 .data(new ExceptionResponse(message))
-                .date(LocalDateTime.now())
+                .dateTime(LocalDateTime.now())
                 .error(new ExceptionResponse(message))
                 .build();
     }
@@ -32,7 +42,7 @@ public class GenericResponse<T> {
     public static <T> GenericResponse<T> success(T data) {
         return GenericResponse.<T>builder()
                 .message(CommonConstants.SUCCESS)
-                .date(LocalDateTime.now())
+                .dateTime(LocalDateTime.now())
                 .httpStatus(HttpStatus.OK)
                 .data(data)
                 .build();

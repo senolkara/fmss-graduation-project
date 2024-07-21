@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api/v1/purchases")
+@CrossOrigin(origins = "http://localhost:3000")
 public class PurchaseController {
 
     private final PurchaseService purchaseService;
@@ -23,4 +24,8 @@ public class PurchaseController {
         return purchaseService.getPurchaseById(id);
     }
 
+    @GetMapping("/orderId/{orderId}")
+    public Purchase getPurchaseByOrderId(@PathVariable("orderId") Long orderId) {
+        return purchaseService.getPurchaseByOrderId(orderId);
+    }
 }

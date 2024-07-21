@@ -1,5 +1,6 @@
 package com.senolkarakurt.userservice.converter;
 
+import com.senolkarakurt.dto.request.RegistrationRequestDto;
 import com.senolkarakurt.dto.request.UserRequestDto;
 import com.senolkarakurt.dto.response.UserResponseDto;
 import com.senolkarakurt.enums.RecordStatus;
@@ -36,6 +37,15 @@ public class UserConverter {
                 .phoneNumber(userRequestDto.getPhoneNumber())
                 .recordStatus(RecordStatus.ACTIVE)
                 .birthDate(userRequestDto.getBirthDate())
+                .roleType(RoleType.USER)
+                .build();
+    }
+
+    public static User toUserByRegistrationRequestDto(RegistrationRequestDto registrationRequestDto){
+        return User.builder()
+                .name(registrationRequestDto.getName())
+                .email(registrationRequestDto.getEmail())
+                .recordStatus(RecordStatus.ACTIVE)
                 .roleType(RoleType.USER)
                 .build();
     }
