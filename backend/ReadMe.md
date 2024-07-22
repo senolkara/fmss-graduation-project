@@ -41,6 +41,7 @@ http://localhost:8097/api/v1/orders/customerId/202
 
 Verilen siparişin ödemesinin yapıldığı endpoint
 > Ödeme senkron, müşteriye paket tanımlama asenkron şeklinde yapılıyor
+> 
 > Fatura oluşturuluyor
 ```sh
 http://localhost:8098/api/v1/purchases/save
@@ -53,6 +54,7 @@ http://localhost:8095/api/v1/packages/customerId/202
 
 Müşsterinin tanımlanan paket üzerinden ilan verebildiği endpoint ve postman sorgusu
 > Building classı, sistem ayağa kaldırılırken önceden tanımlanmış olan yapılar(binalar)
+> 
 > İlan tipleri enum olarak tutuluyor
 ```sh
 TRANSFERABLE: Devren Satılık
