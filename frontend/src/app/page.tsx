@@ -13,7 +13,7 @@ export default function Home() {
       Router.push('/auth/login');
     }
     else{
-      Router.push('/product/add-product');
+      Router.push('/dashboard');
     }
   }, []);
 
