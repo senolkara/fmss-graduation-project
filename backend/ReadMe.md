@@ -91,7 +91,7 @@ http://localhost:8096/api/v1/advertisements/customerId/202
 Müşteri ilanlarını güncelleyebildiği endpoint ve postman sorgusu
 (Burada sadece 3 alanı güncellesin dedim fakat genişletilebilir)
 ```sh
-http://localhost:8096/api/v1/advertisements/update/202
+http://localhost:8096/api/v1/advertisements/update/1
 {
     "advertisementStatus": "DRAFT",
     "advertisementType": "PURCHASEABLE",
