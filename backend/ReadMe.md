@@ -101,4 +101,5 @@ http://localhost:8096/api/v1/advertisements/update/202
 
 Bunların dışında:
 > Satınalınan pakette varsayılan olarak 10 adet ilan yayınlama hakkı ve ilan bitiş tarihi, satınalınan gün üzerine 30 gün eklenerek tanımlanıyor
+> 
 > Yeni bir paket aldığında var olan ilan yayınlama hakkının üzerine 10 adet daha hak ilave ediliyor ve ilan bitiş tarihi, tanımlanan bitiş tarihinin üzerine 30 gün daha ekleniyor
